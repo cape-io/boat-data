@@ -1,6 +1,6 @@
 import { spawn } from 'child_process'
 import readline from 'readline'
-import { analyzerClose, analyzerErr, analyzerJson } from './actions'
+import { analyzerClose, analyzerErr, analyzerData } from './actions'
 
 // const defPortPath = '/dev/tty.usbserial-2D80F'
 const defPortPath = '/dev/ttyUSB0'
@@ -17,5 +17,5 @@ export default function initAnalyzer(dispatcher, serialPortPath) {
   actisAnalyzer.stderr.on('data', dispatcher(analyzerErr))
 
   const linereader = readline.createInterface(actisAnalyzer.stdout, actisAnalyzer.stdin)
-  linereader.on('line', dispatcher(analyzerJson))
+  linereader.on('line', dispatcher(analyzerData))
 }
