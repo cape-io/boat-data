@@ -34,4 +34,7 @@ export const SERIAL_ERROR = 'boatData/SerialError'
 export const serialErr = createSimpleAction(SERIAL_ERROR, toString)
 
 export const SERIAL_OPEN = 'boatData/SerialOpen'
-export const serialOpen = createSimpleAction(SERIAL_OPEN)
+export function serialOpen(payload) {
+  console.log('serial open', payload)
+  return { type: SERIAL_OPEN, payload }
+}

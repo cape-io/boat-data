@@ -10,6 +10,7 @@ const defaultOptions = {
 
 export default function initSerial(dispatcher, options = {}) {
   const { device, ...opts } = defaults(options, defaultOptions)
+  console.log('initSerial', options)
   const serial = new SerialPort(device, {
     ...opts,
     parser: SerialPort.parsers.readline('\n'),
