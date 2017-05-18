@@ -3,6 +3,7 @@ import { combineReducers, createStore } from 'redux'
 import { addListener } from 'cape-redux'
 import analyzer from './reducer'
 import initAnalyzer from './analyzer'
+import initSerial from './serial'
 import sendMsg from './broadcast'
 import { dbt } from './nmea0183'
 
@@ -11,6 +12,7 @@ const store = createStore(reducer, {})
 const dispatcher = action => flow(action, store.dispatch)
 
 initAnalyzer(dispatcher)
+initSerial(dispatcher)
 
 // 115 128267
 // 35 128267

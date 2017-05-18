@@ -1,7 +1,7 @@
 import dgram from 'dgram'
 
 const PORT = 2000
-const HOST = '192.168.1.255'
+const HOST = '192.168.14.255'
 
 const socket = dgram.createSocket('udp4')
 socket.bind(() => {
