@@ -16,6 +16,11 @@ export function serialData(payload) {
   return { type: SERIAL_DATA, payload }
 }
 
+export const NMEA_AIS = 'boatData/NmeaAIS'
+export const nmeaAis = createSimpleAction(NMEA_AIS)
+export const NMEA_DATA = 'boatData/NmeaData'
+export const nmeaData = createSimpleAction(NMEA_DATA)
+
 export const ANALYZER_CLOSE = 'boatData/AnalyzerClose'
 export function analyzerClose(payload) {
   console.error(`Analyzer process exited with code ${payload}.`)
