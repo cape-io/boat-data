@@ -10,7 +10,7 @@ const dispatch = dispatcher(store.dispatch)
 const state = store.getState()
 
 initAnalyzer(dispatch, state.analyzer.devicePath)
-initSerial(dispatch, state.serial)
+initSerial(dispatch, state.ais)
 
 // 115 128267
 // 35 128267
