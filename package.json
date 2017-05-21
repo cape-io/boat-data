@@ -7,7 +7,8 @@
     "compile": "babel src --out-dir lib",
     "prepublish": "npm run compile",
     "start": "node lib",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "update": "git pull && yarn install"
   },
   "dependencies": {
     "address": "^1.0.1",

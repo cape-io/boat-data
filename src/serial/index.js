@@ -2,8 +2,8 @@ import SerialPort from 'serialport'
 import { serialClose, serialData, serialErr, serialOpen } from './actions'
 
 export default function initSerial(dispatcher, options) {
-  const { baudRate, device } = options
-  const serial = new SerialPort(device, {
+  const { baudRate, devicePath } = options
+  const serial = new SerialPort(devicePath, {
     baudRate,
     parser: SerialPort.parsers.readline('\n'),
   })
