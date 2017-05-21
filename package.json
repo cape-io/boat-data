@@ -8,6 +8,7 @@
     "prepublish": "npm run compile",
     "start": "node lib",
     "test": "jest --watch",
+    "up": "git pull && npm run compile && pm2 restart 0",
     "update": "git pull && yarn install"
   },
   "dependencies": {

@@ -7,6 +7,7 @@ const getBroadcast = flow(split('.'), initial, method('concat', ['255']), join('
 
 export default {
   ais: {
+    baudRate: 38400,
     devicePath: '/dev/ttyACM0',
   },
   analyzer: {

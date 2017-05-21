@@ -8,7 +8,7 @@ import store from './createStore'
 
 const dispatch = dispatcher(store.dispatch)
 const state = store.getState()
-
+console.log(state)
 initAnalyzer(dispatch, state.analyzer.devicePath)
 initSerial(dispatch, state.ais)
 
