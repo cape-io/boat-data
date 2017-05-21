@@ -3,6 +3,7 @@ import { createSimpleAction } from 'cape-redux'
 import { getName, isAis, isData } from '../nmea/decode'
 
 export function createDataPayload(payload) {
+  console.log(payload)
   return {
     isAis: isAis(payload),
     isData: isData(payload),

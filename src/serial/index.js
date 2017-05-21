@@ -3,6 +3,7 @@ import { serialClose, serialData, serialErr, serialOpen } from './actions'
 
 export default function initSerial(dispatcher, options) {
   const { baudRate, devicePath } = options
+  console.log('init Serial', devicePath, baudRate)
   const serial = new SerialPort(devicePath, {
     baudRate,
     parser: SerialPort.parsers.readline('\n'),

@@ -11,6 +11,7 @@ function getCmd(serialPortPath) {
 
 export default function initAnalyzer(dispatcher, serialPortPath) {
   const command = getCmd(serialPortPath)
+  console.log(command)
   const actisAnalyzer = spawn('sh', ['-c', command])
 
   actisAnalyzer.on('close', dispatcher(analyzerClose))
