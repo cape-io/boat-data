@@ -1,19 +1,10 @@
 import SerialPort from 'serialport'
-import { defaults } from 'lodash'
 import { serialClose, serialData, serialErr, serialOpen } from './actions'
 
-const defaultOptions = {
-  baudRate: 38400,
-  devicePath: null,
-  open: false,
-  starting: false,
-}
-
-export default function initSerial(dispatcher, options = {}) {
-  const { device, ...opts } = defaults(options, defaultOptions)
-  console.log('initSerial', options)
+export default function initSerial(dispatcher, options) {
+  const { baudRate, device } = options
   const serial = new SerialPort(device, {
-    ...opts,
+    baudRate,
     parser: SerialPort.parsers.readline('\n'),
   })
   serial.on('open', dispatcher(serialOpen))

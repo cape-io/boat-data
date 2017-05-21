@@ -1,24 +1,23 @@
-import { flow, property } from 'lodash'
-import { createStore } from 'redux'
-import { addListener } from 'cape-redux'
+import { property } from 'lodash'
+import { addListener, dispatcher } from 'cape-redux'
 import initAnalyzer from './n2kAnalyzer'
 import initSerial from './serial'
 import sendMsg from './broadcast'
 import { dbt } from './nmea/encode'
-import reducer from './reducer'
-import initState from './initState'
+import store from './createStore'
 
-const store = createStore(reducer, initState)
-store.dispatcher = action => flow(action, store.dispatch)
+const dispatch = dispatcher(store.dispatch)
+const state = store.getState()
 
-initAnalyzer(store)
-// initSerial(store)
+initAnalyzer(dispatch, state.analyzer.devicePath)
+initSerial(dispatch, state.serial)
 
 // 115 128267
 // 35 128267
-const getDepth = property('analyzer.data.115.128267.fields.Depth')
+const getDepth = property('data.115.128267.fields.Depth')
 function sendDepth(reduxStore, meters) {
-  sendMsg(dbt(meters))
+  sendMsg(dbt(meters), state.config.lanBroadcast, state.config.navionicsPort)
+  sendMsg(dbt(meters), state.config.lanBroadcast, state.config.lanPort)
 }
 addListener(getDepth, store, sendDepth)
 

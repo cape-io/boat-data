@@ -12,7 +12,7 @@
   "dependencies": {
     "address": "^1.0.1",
     "cape-lodash": "^1.12.0",
-    "cape-redux": "^3.1.0",
+    "cape-redux": "^3.2.0",
     "lodash": "^4.17.4",
     "redux": "^3.6.0",
     "serialport": "^4.0.7"
