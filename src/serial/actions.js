@@ -1,12 +1,23 @@
-import { toString } from 'lodash'
+import { cond, toString } from 'lodash'
 import { createSimpleAction } from 'cape-redux'
+import { getName, isAis, isData } from '../nmea/decode'
 
-export const SERIAL_DATA = 'boatData/SerialData'
-export function serialData(payload) {
-  // console.log(payload)
-  // Could decide what kind of data and parse if possible here.
-  return { type: SERIAL_DATA, payload }
+export function createDataPayload(payload) {
+  return {
+    name: getName(payload),
+    sentence: payload,
+  }
 }
+export const NMEA_AIS = 'boatData/NmeaAIS'
+export const nmeaAis = createSimpleAction(NMEA_AIS, createDataPayload)
+
+export const NMEA_DATA = 'boatData/NmeaData'
+
+export const nmeaData = createSimpleAction(NMEA_DATA, createDataPayload)
+export const serialData = cond([
+  [isAis, nmeaAis],
+  [isData, nmeaData],
+])
 
 export const SERIAL_CLOSE = 'boatData/SerialClose'
 export function serialClose(payload) {

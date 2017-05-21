@@ -3,9 +3,9 @@ import readline from 'readline'
 import { analyzerClose, analyzerErr, analyzerData } from './actions'
 
 // const defPortPath = '/dev/tty.usbserial-2D80F'
-const defPortPath = '/dev/ttyUSB0'
+// const defPortPath = '/dev/ttyUSB0'
 // actisense-serial /dev/tty.usbserial-2D80F | analyzer -json
-function getCmd(serialPortPath = defPortPath) {
+function getCmd(serialPortPath) {
   return `actisense-serial ${serialPortPath} | analyzer -json`
 }
 

@@ -6,12 +6,13 @@ import initSerial from './serial'
 import sendMsg from './broadcast'
 import { dbt } from './nmea/encode'
 import reducer from './reducer'
+import initState from './initState'
 
-const store = createStore(reducer, {})
-const dispatcher = action => flow(action, store.dispatch)
+const store = createStore(reducer, initState)
+store.dispatcher = action => flow(action, store.dispatch)
 
-initAnalyzer(dispatcher)
-initSerial(dispatcher)
+initAnalyzer(store)
+// initSerial(store)
 
 // 115 128267
 // 35 128267

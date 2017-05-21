@@ -1,5 +1,7 @@
 import { get } from 'lodash'
 import { setIn } from 'cape-lodash'
+import { createReducer } from 'cape-redux'
+import { ANALYZER_DATA } from '../n2kAnalyzer/actions'
 
 export function setPngDescription(state, payload) {
   const path = ['pgnSrc', payload.pgn, 'description']
@@ -17,3 +19,7 @@ export function setData(state, payload) {
   const path = ['data', payload.src, payload.pgn]
   return setIn(path, setPgnSrc(state, payload), payload)
 }
+export const reducers = {
+  [ANALYZER_DATA]: setData,
+}
+export default createReducer(reducers, {})
