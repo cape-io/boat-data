@@ -1,13 +1,12 @@
 import { flow, property } from 'lodash'
-import { combineReducers, createStore } from 'redux'
+import { createStore } from 'redux'
 import { addListener } from 'cape-redux'
-import analyzer from './reducer'
-import initAnalyzer from './analyzer'
+import initAnalyzer from './n2kAnalyzer'
 import initSerial from './serial'
 import sendMsg from './broadcast'
-import { dbt } from './nmea0183'
+import { dbt } from './nmea/encode'
+import reducer from './reducer'
 
-const reducer = combineReducers({ analyzer })
 const store = createStore(reducer, {})
 const dispatcher = action => flow(action, store.dispatch)
 
@@ -21,6 +20,7 @@ function sendDepth(reduxStore, meters) {
   sendMsg(dbt(meters))
 }
 addListener(getDepth, store, sendDepth)
+
 // setInterval(() => {
 //   console.log(JSON.stringify(store.getState().analyzer.data, null, 2))
 // }, 3000)

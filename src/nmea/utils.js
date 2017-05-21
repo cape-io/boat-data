@@ -11,9 +11,7 @@ function computeChecksum(sentence) {
   let i
   // skip the $
   i = 1
-
   // init to first character    var count;
-
   c1 = sentence.charCodeAt(i)
 
   // process rest of characters, zero delimited
