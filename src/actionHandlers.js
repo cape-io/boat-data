@@ -6,6 +6,6 @@ export function sendAis(sentence, feeds) {
 }
 export function handleSerialData({ action, store }) {
   const state = store.getState()
-  if (action.isAis) sendAis(action.payload.sentence, state.config.aisFeeds)
+  if (action.payload.isAis) sendAis(action.payload.sentence, state.config.aisFeeds)
   sendMsg(action.payload.sentence, state.config.lanBroadcast, state.config.lanPort)
 }
