@@ -2,7 +2,7 @@ import { forEach } from 'lodash'
 import sendMsg from './broadcast'
 
 export function sendAis(sentence, feeds) {
-  forEach(feeds, ({ ip, port }) => sendMsg(sentence, ip, port))
+  if (feeds) forEach(feeds, ({ ip, port }) => sendMsg(sentence, ip, port))
 }
 export function handleSerialData({ action, store }) {
   const state = store.getState()
