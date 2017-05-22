@@ -16,9 +16,9 @@ export default {
   },
   config: {
     aisFeeds: [
-      { ip: '5.9.207.224', port: 6636, name: '' },
-      { ip: '54.204.25.151', port: 7113, name: '' },
-      { ip: '144.76.105.244', port: 2092, name: '' },
+      { ip: '5.9.207.224', port: 6636, name: 'Marine Traffic' },
+      { ip: '54.204.25.151', port: 7113, name: 'Boat Beacon' },
+      { ip: '144.76.105.244', port: 2092, name: 'AIS Hub' },
     ],
     lanBroadcast: getBroadcast(lanIp),
     lanIp,
