@@ -18,6 +18,7 @@ const getDepth = property('data.115.128267.fields.Depth')
 function sendDepth(reduxStore, meters) {
   sendMsg(dbt(meters), state.config.lanBroadcast, state.config.navionicsPort)
   sendMsg(dbt(meters), state.config.lanBroadcast, state.config.lanPort)
+  console.log('depth', meters)
 }
 addListener(getDepth, store, sendDepth)
 
