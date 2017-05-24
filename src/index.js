@@ -22,6 +22,6 @@ function sendDepth(reduxStore, meters) {
 }
 addListener(getDepth, store, sendDepth)
 
-setInterval(() => {
-  console.log(JSON.stringify(store.getState().analyzer.data, null, 2))
-}, 3000)
+// setInterval(() => {
+//   console.log(JSON.stringify(store.getState().data, null, 2))
+// }, 3000)

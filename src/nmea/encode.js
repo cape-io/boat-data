@@ -1,5 +1,6 @@
 import { curry } from 'lodash'
-import { metersToFeet, metersToFathoms, toSentence } from './utils'
+import { metersToFeet, metersToFathoms } from '../utils'
+import { toSentence } from './utils'
 
 export const depth = curry((prefix, meters) => toSentence([
   prefix,
