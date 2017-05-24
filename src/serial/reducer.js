@@ -4,11 +4,13 @@ import { createReducer } from 'cape-redux'
 import { SERIAL_CLOSE, SERIAL_ERROR, SERIAL_OPEN } from './actions'
 
 const defaultState = {
-  baudRate: 38400,
+  baudRate: null, // 38400,
+  command: null,
   devicePath: null,
   errorMsg: null,
   isOpen: false,
   isRunning: false,
+  isStarting: false,
 }
 
 export const setClosed = mergeWith({ isOpen: false, isRunning: false })
