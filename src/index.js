@@ -1,5 +1,6 @@
 import { property } from 'lodash'
 import { addListener, dispatcher } from 'cape-redux'
+import { InfluxDB } from 'influx'
 import initAnalyzer from './n2kAnalyzer'
 import initSerial from './serial'
 import sendMsg from './broadcast'
@@ -12,13 +13,19 @@ console.log(state)
 initAnalyzer(dispatch, state.analyzer.devicePath)
 initSerial(dispatch, state.ais)
 
+const influx = new InfluxDB({
+  host: 'localhost',
+  database: 'boatdata',
+})
+
 // 115 128267
 // 35 128267
-const getDepth = property('data.115.128267.fields.Depth')
+const getDepth = property('data.data.115.128267.fields.Depth')
 function sendDepth(reduxStore, meters) {
   sendMsg(dbt(meters), state.config.lanBroadcast, state.config.navionicsPort)
   sendMsg(dbt(meters), state.config.lanBroadcast, state.config.lanPort)
-  console.log('depth', meters)
+  influx.writePoints([{ measurement: 'depth', fields: { value: meters } }])
+  // console.log('depth', meters)
 }
 addListener(getDepth, store, sendDepth)
 
