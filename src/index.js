@@ -6,12 +6,14 @@ import initSerial from './serial'
 import sendMsg from './broadcast'
 import { dbt } from './nmea/encode'
 import store from './createStore'
+import server from './server'
 
 const dispatch = dispatcher(store.dispatch)
 const state = store.getState()
 console.log(state)
 initAnalyzer(dispatch, state.analyzer.devicePath)
 initSerial(dispatch, state.ais)
+server(store)
 
 const influx = new InfluxDB({
   host: 'localhost',
