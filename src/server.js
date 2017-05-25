@@ -7,6 +7,7 @@ const server = new Hapi.Server(serverOptions)
 server.connection({
   host: 'localhost',
   port: 8000,
+  routes: { cors: true },
 })
 export default function init(store) {
   server.route({
