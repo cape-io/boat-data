@@ -1,27 +1,22 @@
-export const mHex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+import { method } from 'lodash'
+import { flow, padCharsStart, reduce, replace, toUpper } from 'lodash/fp'
 
-export function toHexString(v) {
-  const msn = (v >> 4) & 0x0f
-  const lsn = (v >> 0) & 0x0f
-  return mHex[msn] + mHex[lsn]
+export const rmDollar = replace(/^\$/, '')
+export function stripDollar(baseString) {
+  return baseString[0] === '$' ? baseString.slice(1) : baseString
+}
+export function checkSumReducer(result, value) {
+  return result ^ value.charCodeAt() // eslint-disable-line no-bitwise
 }
 
-function computeChecksum(sentence) {
-  let c1
-  let i
-  // skip the $
-  i = 1
-  // init to first character    var count;
-  c1 = sentence.charCodeAt(i)
-
-  // process rest of characters, zero delimited
-  for (i = 2; i < sentence.length; ++i) {
-    c1 = c1 ^ sentence.charCodeAt(i)
-  }
-
-  return '*' + toHexString(c1)
-}
+// Without the dollar sign please.
+export const getChecksum = flow(
+  reduce(checkSumReducer, 0),
+  method('toString', 16),
+  toUpper,
+  padCharsStart('0', 2)
+)
 export function toSentence(parts) {
   const base = parts.join(',')
-  return base + computeChecksum(base)
+  return `${base}*${computeChecksum(base)}`
 }
