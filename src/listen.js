@@ -27,8 +27,8 @@ function sendWind(reduxStore, speed) {
   const state = reduxStore.getState()
   const angle = getWindAngle(state)
   const sentence = mvw({ angle, reference: 'R', speed, unit: 'M' })
-  console.log('mvw', sentence)
-  sendMsg(sentence, state.config.lanBroadcast, state.config.navionicsPort)
+  // console.log('mvw', sentence)
+  sendMsg(sentence, state.config.lanBroadcast, state.config.lanPort)
   influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
 }
 export default function init(store) {
