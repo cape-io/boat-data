@@ -969,6 +969,12 @@ cape-lodash@^1.12.0, cape-lodash@^1.8.0:
   dependencies:
     lodash "^4.17.2"
 
+cape-lodash@^1.7.0:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/cape-lodash/-/cape-lodash-1.12.1.tgz#d086bee1391f05bb96d38905cdb4cdb3b038c43a"
+  dependencies:
+    lodash "^4.17.2"
+
 cape-redux@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/cape-redux/-/cape-redux-3.2.0.tgz#2df3a5864ad12d2faaff5b56f5ec9f297f32508a"
@@ -976,6 +982,13 @@ cape-redux@^3.2.0:
     cape-lodash "^1.8.0"
     lodash "^4.17.2"
     redux "^3.6.0"
+
+cape-select@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/cape-select/-/cape-select-2.4.0.tgz#c4682a65e9b4c3c57bdaa8ad2e8e6012fa963c5f"
+  dependencies:
+    cape-lodash "^1.7.0"
+    lodash "^4.17.2"
 
 caseless@~0.12.0:
   version "0.12.0"
