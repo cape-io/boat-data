@@ -7,9 +7,9 @@ socket.on('listening', () => {
   console.log(`UDP Server listening on ${address.address}:${address.port}`)
 })
 
-socket.on('message', (message) => {
-  // console.log(`${remote.address}:${remote.port} - ${message}`)
-  console.log(message)
+socket.on('message', (message, remote) => {
+  console.log(`${remote.address}:${remote.port} - ${message}`)
+  // console.log(message)
   // process.stdout.write(message)
 })
 socket.bind(10110)
