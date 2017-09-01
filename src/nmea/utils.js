@@ -9,14 +9,16 @@ export function checkSumReducer(result, value) {
   return result ^ value.charCodeAt() // eslint-disable-line no-bitwise
 }
 
-// Without the dollar sign please.
+// WITHOUT the dollar sign please.
 export const getChecksum = flow(
   reduce(checkSumReducer, 0),
   method('toString', 16),
   toUpper,
   padCharsStart('0', 2)
 )
+
+// Conventional field delimited messages. Start delimiter is always $.
 export function toSentence(parts) {
   const base = parts.join(',')
-  return `${base}*${computeChecksum(base)}`
+  return `$${base}*${getChecksum(base)}` // \r\n
 }

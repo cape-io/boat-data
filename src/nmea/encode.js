@@ -12,5 +12,14 @@ export const depth = curry((prefix, meters) => toSentence([
   'F',
 ]))
 
-export const dbs = depth('$--DBT')
-export const dbt = depth('$--DBT')
+export const dbs = depth('--DBS')
+export const dbt = depth('--DBT')
+
+export const mvw = ({ angle, reference = 'R', speed, unit = 'M' }) => toSentence([
+  '--MWV',
+  angle.toFixed(1),
+  reference,
+  speed.toFixed(1),
+  unit,
+  'A',
+])

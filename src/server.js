@@ -11,7 +11,7 @@ server.connection({
 export default function init(store) {
   server.route({
     method: 'GET',
-    path: '/state',
+    path: '/',
     handler: (request, reply) => reply(store.getState()),
   })
   server.start((err) => {

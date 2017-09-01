@@ -1,23 +1,24 @@
 /* globals describe test expect */
-import { computeChecksum, getChecksum, stripDollar } from './utils'
+import { getChecksum, stripDollar } from './utils'
 
-// $--DBT,17.6,f,5.37,M,2.9,F*1B
-// $--DBT,16.7,f,5.10,M,2.8,F*1F
-// $--DBT,18.2,f,5.55,M,3.0,F*1C
-// $--DBT,16.3,f,4.97,M,2.7,F*1A
-// $--DBT,16.6,f,5.06,M,2.8,F*19
-// http://nmeachecksum.eqth.net
+const dbt = [
+  '--DBT,17.6,f,5.37,M,2.9,F',
+  '--DBT,16.7,f,5.10,M,2.8,F',
+  '--DBT,18.2,f,5.55,M,3.0,F',
+  '--DBT,16.3,f,4.97,M,2.7,F',
+  '--DBT,16.6,f,5.06,M,2.8,F',
+  '--DBT,7.2,f,2.20,M,1.2,F',
+]
 
-const dbt1 = '$--DBT,17.6,f,5.37,M,2.9,F'
-
-describe('computeChecksum', () => {
-  test('Calculate the checksum of a NMEA0183 sentence.', () => {
-    expect(computeChecksum(dbt1)).toBe('1B')
-  })
-})
 describe('getChecksum', () => {
+  // http://nmeachecksum.eqth.net
   test('Calculate the checksum of a NMEA0183 sentence.', () => {
-    expect(getChecksum(dbt1)).toBe('1B')
+    expect(getChecksum(dbt[0])).toBe('1B')
+    expect(getChecksum(dbt[1])).toBe('1F')
+    expect(getChecksum(dbt[2])).toBe('1C')
+    expect(getChecksum(dbt[3])).toBe('1A')
+    expect(getChecksum(dbt[4])).toBe('19')
+    expect(getChecksum(dbt[5])).toBe('27')
   })
 })
 describe('stripDollar', () => {
