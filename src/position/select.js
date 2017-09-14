@@ -1,5 +1,5 @@
-import { cond, eq, negate, stubFalse, stubTrue, partialRight } from 'lodash'
-import { get } from 'lodash/fp'
+import { cond, eq, flow, isFinite, negate, stubFalse, stubTrue, partialRight } from 'lodash'
+import { conformsTo, get } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { getDistance } from 'geolib'
 import { select } from 'cape-select'
@@ -36,7 +36,12 @@ export const waypointAlarm = createSelector(
 
 export const getAlarm = get('alarm.active')
 export const isAlarmDisabled = get('alarm.disabled')
+export const hasWaypoint = flow(get('waypoint'), conformsTo({
+  latitude: isFinite,
+  longitude: isFinite,
+}))
 export const toggleAlarm = cond([
   [isAlarmDisabled, stubFalse],
-  [stubTrue, createSelector(waypointAlarm, getAlarm, negate(eq))],
+  [hasWaypoint, createSelector(waypointAlarm, getAlarm, negate(eq))],
+  [stubTrue, stubFalse],
 ])

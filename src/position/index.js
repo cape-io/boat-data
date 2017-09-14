@@ -23,9 +23,3 @@ client.on('message', (topic, message) => {
     store.dispatch(positionUpdate(JSON.parse(message)))
   }
 })
-
-const waypoint = {
-  latitude: 43.663086666666665,
-  longitude: -70.23708666666667,
-}
-store.dispatch(waypointUpdate(waypoint))

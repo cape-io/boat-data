@@ -5,6 +5,13 @@ import initSerial from './serial'
 import store from './createStore'
 import server from './server'
 import listeners from './listen'
+import { waypointUpdate } from './position/actions'
+
+const waypoint = {
+  latitude: 43.663086666666665,
+  longitude: -70.23708666666667,
+}
+store.dispatch(waypointUpdate(waypoint))
 
 const dispatch = dispatcher(store.dispatch)
 const state = store.getState()
