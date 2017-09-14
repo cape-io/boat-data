@@ -36,7 +36,7 @@ export const sendGps = flow(
   getPayload,
   getLatLong,
   JSON.stringify,
-  publish
+  publish('gps')
 )
 export const handleAnalyzer = cond([
   [isGpsPgn, sendGps],
