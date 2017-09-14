@@ -1,3 +1,4 @@
+import { get } from 'lodash'
 import Hapi from 'hapi'
 
 const serverOptions = {
@@ -13,6 +14,11 @@ export default function init(store) {
     method: 'GET',
     path: '/',
     handler: (request, reply) => reply(store.getState()),
+  })
+  server.route({
+    method: 'GET',
+    path: '/{path*}',
+    handler: (request, reply) => reply(get(store.getState(), request.params.path.split('/'))),
   })
   server.start((err) => {
     if (err) { throw err }
