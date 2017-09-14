@@ -1,6 +1,6 @@
 import { forEach } from 'lodash'
-import { cond, flow, get } from 'lodash/fp'
-import { oneOf, renamePick } from 'cape-lodash'
+import { flow, get } from 'lodash/fp'
+import { condId, oneOf, renamePick } from 'cape-lodash'
 import sendMsg from './broadcast'
 import { publish } from './mqtt'
 
@@ -38,6 +38,6 @@ export const sendGps = flow(
   JSON.stringify,
   publish('gps')
 )
-export const handleAnalyzer = cond([
+export const handleAnalyzer = condId(
   [isGpsPgn, sendGps],
-])
+)
