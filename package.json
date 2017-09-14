@@ -26,6 +26,7 @@
     "influx": "^5.0.7",
     "lodash": "^4.17.4",
     "mqtt": "^2.13.0",
+    "plivo": "^0.4.1",
     "redux": "^3.7.2",
     "reselect": "^3.0.1",
     "serialport": "^5.0.0"

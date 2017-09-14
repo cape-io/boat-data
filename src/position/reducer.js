@@ -1,8 +1,8 @@
-import { flow, now, round } from 'lodash'
-import { condId, setField, setKey } from 'cape-lodash'
+import { flow, round } from 'lodash'
+import { condId, setField, setKey, setKeyVal } from 'cape-lodash'
 import { createReducer } from 'cape-redux'
-import { ALARM_DISTANCE, POSITION_UPDATE, WAYPOINT_UPDATE } from './actions'
-import { getPosDist, toggleAlarm, waypointAlarm } from './select'
+import { ALARM_DISABLE, ALARM_DISTANCE, POSITION_UPDATE, WAYPOINT_UPDATE } from './actions'
+import { getPosDist, getTime, toggleAlarm, waypointAlarm } from './select'
 
 export const position = {
   latitude: null,
@@ -19,6 +19,7 @@ export const defaultState = {
     distance: 46, // meters
     over: true, // false to trigger alarm when under.
     time: null, // Time of last toggle.
+    disabled: false, // Should we prevent toggle of alarm status?
   },
   updateMeters: 0.7, // Update after having moved this many meters.
   limitSrc: 130,
@@ -48,7 +49,7 @@ export function savePosition(state) {
 export const saveAlarm = condId([
   toggleAlarm, flow(
     setField('alarm.active', waypointAlarm),
-    setField('alarm.time', now)
+    setField('alarm.time', getTime)
   ),
 ])
 
@@ -63,9 +64,14 @@ export function positionUp(state, payload) {
   if (!state.savedPosition) return addLastPos(addSavedPos(state, payload), payload)
   return processPosUp(state, payload)
 }
+export const alarmDisable = flow(
+  setKeyVal('alarm.watching', false),
+  setKeyVal('alarm.active', false)
+)
 export const reducers = {
   [ALARM_DISTANCE]: setKey('alarm.distance'),
   [POSITION_UPDATE]: positionUp,
   [WAYPOINT_UPDATE]: setKey('waypoint'), // Leaving waypoint distance calc for selector.
+  [ALARM_DISABLE]: alarmDisable,
 }
 export default createReducer(reducers, defaultState)

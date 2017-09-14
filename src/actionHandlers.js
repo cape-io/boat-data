@@ -3,6 +3,12 @@ import { flow, get } from 'lodash/fp'
 import { condId, oneOf, renamePick } from 'cape-lodash'
 import sendMsg from './broadcast'
 import { publish } from './mqtt'
+import { positionUpdate } from './position/actions'
+
+export function nextAction(props) {
+  props.next(props.action)
+  return props
+}
 
 export function sendAis(sentence, feeds) {
   if (feeds) forEach(feeds, ({ ip, port }) => sendMsg(sentence, ip, port))
@@ -32,12 +38,12 @@ export const getLatLong = renamePick({
   'fields.Longitude': 'longitude',
   src: 'src',
 })
-export const sendGps = flow(
-  getPayload,
-  getLatLong,
-  JSON.stringify,
-  publish('gps')
-)
-export const handleAnalyzer = condId(
-  [isGpsPgn, sendGps],
+export function sendGps({ action, store }) {
+  const payload = getLatLong(action.payload)
+  store.dispatch(positionUpdate(payload))
+  publish('gps', JSON.stringify(payload))
+}
+export const handleAnalyzer = flow(
+  nextAction,
+  condId([isGpsPgn, sendGps]),
 )

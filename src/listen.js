@@ -1,9 +1,12 @@
-import { get } from 'lodash/fp'
+import { method, partial } from 'lodash'
+import { flow, get } from 'lodash/fp'
 import { InfluxDB } from 'influx'
 import { addListener } from 'cape-redux'
 import { select } from 'cape-select'
 import sendMsg from './broadcast'
 import { dbt, mvw } from './nmea/encode'
+import sendAlarm from './plivo'
+import { getAlarm } from './position/select'
 
 const influx = new InfluxDB({
   host: 'localhost',
@@ -31,7 +34,13 @@ function sendWind(reduxStore, speed) {
   sendMsg(sentence, state.config.lanBroadcast, state.config.lanPort)
   influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
 }
+
+const getp = partial(flow, get('position'))
+const getSt = method('getState')
+const processAlarm = flow(getSt, getp(getAlarm), sendAlarm)
+
 export default function init(store) {
   addListener(getDepth, store, sendDepth)
   addListener(getWindSpeed, store, sendWind)
+  addListener(getAlarm, store, processAlarm)
 }

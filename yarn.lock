@@ -3506,6 +3506,13 @@ pkg-up@^1.0.0:
   dependencies:
     find-up "^1.0.0"
 
+plivo@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/plivo/-/plivo-0.4.1.tgz#243055a7b0daa9e30b11de539fabe81e01c8198c"
+  dependencies:
+    request "^2.71.0"
+    xmlbuilder "~8.0.0"
+
 pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
@@ -3772,7 +3779,7 @@ request-promise-native@^1.0.3:
     stealthy-require "^1.1.0"
     tough-cookie ">=2.3.0"
 
-request@^2.79.0, request@^2.81.0:
+request@^2.71.0, request@^2.79.0, request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -4570,6 +4577,12 @@ ws@^3.0.0:
 xml-name-validator@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-2.0.1.tgz#4d8b8f1eccd3419aa362061becef515e1e559635"
+
+xmlbuilder@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-8.0.0.tgz#fe63063d4cffba8305199db21499fc2a757cc173"
+  dependencies:
+    lodash "^4.0.0"
 
 xmlhttprequest@1.8.0:
   version "1.8.0"

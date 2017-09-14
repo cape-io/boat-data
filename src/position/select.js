@@ -1,10 +1,11 @@
-import { eq, negate, partialRight } from 'lodash'
+import { cond, eq, negate, stubFalse, stubTrue, partialRight } from 'lodash'
 import { get } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { getDistance } from 'geolib'
 import { select } from 'cape-select'
 
 export const getSavedPos = get('savedPosition')
+export const getTime = select(getSavedPos, 'time')
 export const getLastPos = get('lastPosition')
 export const getLastDist = select(getLastPos, 'distance')
 export const getDist = partialRight(getDistance, 1, 1)
@@ -34,9 +35,8 @@ export const waypointAlarm = createSelector(
 )
 
 export const getAlarm = get('alarm.active')
-
-export const toggleAlarm = createSelector(
-  waypointAlarm,
-  getAlarm,
-  negate(eq)
-)
+export const isAlarmDisabled = get('alarm.disabled')
+export const toggleAlarm = cond([
+  [isAlarmDisabled, stubFalse],
+  [stubTrue, createSelector(waypointAlarm, getAlarm, negate(eq))],
+])
