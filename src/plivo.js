@@ -16,6 +16,7 @@ function getParams({ dst, text }) {
   }
 }
 export default function sendMsg(params) {
+  console.log('sendMsg')
   client.send_message(getParams(params), (status, response) => {
     console.log('Status: ', status)
     console.log('API Response:\n', response)
