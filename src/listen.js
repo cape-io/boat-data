@@ -1,12 +1,11 @@
-import { method, partial } from 'lodash'
-import { flow, get } from 'lodash/fp'
+import { get } from 'lodash/fp'
 import { InfluxDB } from 'influx'
 import { addListener } from 'cape-redux'
 import { select } from 'cape-select'
 import sendMsg from './broadcast'
 import { dbt, mvw } from './nmea/encode'
-import sendAlarm from './plivo'
-import { getAlarm } from './position/select'
+import anchorAlarm from './position/alarm'
+import sendSms from './plivo'
 
 const influx = new InfluxDB({
   host: 'localhost',
@@ -15,7 +14,7 @@ const influx = new InfluxDB({
 
 // 115 128267
 // 35 128267
-const getDepth = get('data.data.115.128267.fields.Depth')
+export const getDepth = get('data.data.115.128267.fields.Depth')
 function sendDepth(reduxStore, meters) {
   const state = reduxStore.getState()
   sendMsg(dbt(meters), state.config.lanBroadcast, state.config.navionicsPort)
@@ -35,12 +34,8 @@ function sendWind(reduxStore, speed) {
   influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
 }
 
-const getp = partial(flow, get('position'))
-const getSt = method('getState')
-const processAlarm = flow(getSt, getp(getAlarm), sendAlarm)
-
 export default function init(store) {
   addListener(getDepth, store, sendDepth)
   addListener(getWindSpeed, store, sendWind)
-  addListener(getAlarm, store, processAlarm)
+  anchorAlarm(store, sendSms, get('position'))
 }

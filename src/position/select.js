@@ -26,6 +26,8 @@ export const getWaypointDistance = createSelector(
 
 export const getWaypointAlarmDistance = get('alarm.distance')
 export const alarmOver = get('alarm.over')
+export const getAlarm = get('alarm.active')
+export const isAlarmDisabled = get('alarm.disabled')
 
 export const waypointAlarm = createSelector(
   getWaypointDistance,
@@ -34,9 +36,8 @@ export const waypointAlarm = createSelector(
   (dist, alarm, over) => (over ? dist > alarm : dist < alarm)
 )
 
-export const getAlarm = get('alarm.active')
-export const isAlarmDisabled = get('alarm.disabled')
-export const hasWaypoint = flow(get('waypoint'), conformsTo({
+
+export const hasWaypoint = flow(getWaypoint, conformsTo({
   latitude: isFinite,
   longitude: isFinite,
 }))

@@ -5,13 +5,15 @@ import initSerial from './serial'
 import store from './createStore'
 import server from './server'
 import listeners from './listen'
-import { waypointUpdate } from './position/actions'
+import { alarmDistance, limitSrc, waypointUpdate } from './position/actions'
 
 const waypoint = {
-  latitude: 43.663086666666665,
-  longitude: -70.23708666666667,
+  latitude: 38.9636166, // 38.9634659, 38.963588
+  longitude: -76.480976, // -76.4809707, -76.481038
 }
 store.dispatch(waypointUpdate(waypoint))
+store.dispatch(limitSrc(130))
+store.dispatch(alarmDistance(16))
 
 const dispatch = dispatcher(store.dispatch)
 const state = store.getState()

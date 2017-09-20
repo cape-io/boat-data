@@ -1,7 +1,7 @@
-import { flow, round } from 'lodash'
+import { flow, round } from 'lodash/fp'
 import { condId, setField, setKey, setKeyVal } from 'cape-lodash'
 import { createReducer } from 'cape-redux'
-import { ALARM_DISABLE, ALARM_DISTANCE, POSITION_UPDATE, WAYPOINT_UPDATE } from './actions'
+import { ALARM_DISABLE, ALARM_DISTANCE, LIMIT_SRC, POSITION_UPDATE, WAYPOINT_UPDATE } from './actions'
 import { getPosDist, getTime, toggleAlarm, waypointAlarm } from './select'
 
 export const position = {
@@ -22,14 +22,14 @@ export const defaultState = {
     disabled: false, // Should we prevent toggle of alarm status?
   },
   updateMeters: 0.7, // Update after having moved this many meters.
-  limitSrc: 130,
+  limitSrc: null,
   savedPosition: null,
   lastPosition: position,
   waypoint: null,
 }
 
 export function skipPos(state, payload) {
-  return state.limitSrc && state.limitSrc !== payload.src
+  return !!state.limitSrc && state.limitSrc !== payload.src
 }
 // This _could_ be a memoized selector and not saved to state.
 // I think it provides enough convenience to leave it.
@@ -68,10 +68,14 @@ export const alarmDisable = flow(
   setKeyVal('alarm.watching', false),
   setKeyVal('alarm.active', false)
 )
+export const setAlarmDistance = setKey('alarm.distance')
+export const setWaypoint = setKey('waypoint')
+export const setLimitSrc = setKey('limitSrc')
 export const reducers = {
-  [ALARM_DISTANCE]: setKey('alarm.distance'),
+  [ALARM_DISTANCE]: setAlarmDistance,
   [POSITION_UPDATE]: positionUp,
-  [WAYPOINT_UPDATE]: setKey('waypoint'), // Leaving waypoint distance calc for selector.
+  [WAYPOINT_UPDATE]: setWaypoint, // Leaving waypoint distance calc for selector.
   [ALARM_DISABLE]: alarmDisable,
+  [LIMIT_SRC]: setLimitSrc,
 }
 export default createReducer(reducers, defaultState)

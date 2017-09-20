@@ -1005,9 +1005,9 @@ camelcase@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
-cape-lodash@^1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/cape-lodash/-/cape-lodash-1.13.0.tgz#871d9749b0e6f27ce6667126033343a5a1b665f4"
+cape-lodash@^1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/cape-lodash/-/cape-lodash-1.13.1.tgz#58e0e181bb6dfb7e80bc328e997dbf2b265d5278"
   dependencies:
     lodash "^4.17.4"
 
@@ -2000,7 +2000,7 @@ glob-stream@^6.1.0:
     to-absolute-glob "^2.0.0"
     unique-stream "^2.0.2"
 
-glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@~7.1.1:
+glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.1.tgz#805211df04faaf1c63a3600306cdf5ade50b2ec8"
   dependencies:
@@ -3289,10 +3289,6 @@ object-hash@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-1.1.8.tgz#28a659cf987d96a4dabe7860289f3b5326c4a03c"
 
-object-inspect@~1.2.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.2.2.tgz#c82115e4fcc888aea14d64c22e4f17f6a70d5e5a"
-
 object-inspect@~1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.3.0.tgz#5b1eb8e6742e2ee83342a637034d844928ba2f6d"
@@ -3829,7 +3825,7 @@ resolve-from@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-1.0.1.tgz#26cbfe935d1aeeeabb29bc3fe5aeb01e93d44226"
 
-resolve@1.1.7, resolve@^1.1.6, resolve@~1.1.7:
+resolve@1.1.7, resolve@^1.1.6:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
@@ -4175,24 +4171,6 @@ table@^3.7.8:
     lodash "^4.0.0"
     slice-ansi "0.0.4"
     string-width "^2.0.0"
-
-tape@^4.6.0:
-  version "4.6.3"
-  resolved "https://registry.yarnpkg.com/tape/-/tape-4.6.3.tgz#637e77581e9ab2ce17577e9bd4ce4f575806d8b6"
-  dependencies:
-    deep-equal "~1.0.1"
-    defined "~1.0.0"
-    for-each "~0.3.2"
-    function-bind "~1.1.0"
-    glob "~7.1.1"
-    has "~1.0.1"
-    inherits "~2.0.3"
-    minimist "~1.2.0"
-    object-inspect "~1.2.1"
-    resolve "~1.1.7"
-    resumer "~0.0.0"
-    string.prototype.trim "~1.1.2"
-    through "~2.3.8"
 
 tape@^4.6.3:
   version "4.8.0"

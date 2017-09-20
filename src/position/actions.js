@@ -16,3 +16,6 @@ export const alarmDistance = createSimpleAction(ALARM_DISTANCE)
 
 export const ALARM_DISABLE = 'position/alarm-off'
 export const alarmDisable = noopAction(ALARM_DISABLE)
+
+export const LIMIT_SRC = 'position/limit-src'
+export const limitSrc = createSimpleAction(LIMIT_SRC)
