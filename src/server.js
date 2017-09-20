@@ -24,8 +24,8 @@ export default function init(store) {
   })
   server.route({
     method: 'GET',
-    path: '/position/alarm/distance',
-    handler: (request, reply) => reply(getWaypointAlarmDistance(store.getState())),
+    path: '/position/alarm/waypoint/distance',
+    handler: (request, reply) => reply(getWaypointAlarmDistance(store.getState().position)),
   })
   server.route({
     method: 'GET',
