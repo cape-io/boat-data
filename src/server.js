@@ -20,7 +20,8 @@ export default function init(store) {
   server.route({
     method: 'GET',
     path: '/position/alarm/distance/{meters}',
-    handler: (request, reply) => reply(store.dispatch(alarmDistance(request.params.meters))),
+    handler: (request, reply) =>
+      reply(store.dispatch(alarmDistance(parseInt(request.params.meters, 10)))),
   })
   server.route({
     method: 'GET',
