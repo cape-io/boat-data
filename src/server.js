@@ -1,6 +1,7 @@
 import { get } from 'lodash'
 import Hapi from 'hapi'
 import { alarmDistance } from './position/actions'
+import { getWaypointAlarmDistance } from './position/seledct'
 
 const serverOptions = {
   debug: { request: ['error'] },
@@ -20,6 +21,11 @@ export default function init(store) {
     method: 'GET',
     path: '/position/alarm/distance/{meters}',
     handler: (request, reply) => reply(store.dispatch(alarmDistance(request.params.meters))),
+  })
+  server.route({
+    method: 'GET',
+    path: '/position/alarm/distance',
+    handler: (request, reply) => reply(getWaypointAlarmDistance(store.getState())),
   })
   server.route({
     method: 'GET',
