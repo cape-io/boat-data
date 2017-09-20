@@ -1,7 +1,7 @@
 import { get } from 'lodash'
 import Hapi from 'hapi'
 import { alarmDistance } from './position/actions'
-import { getWaypointAlarmDistance } from './position/seledct'
+import { getWaypointAlarmDistance } from './position/select'
 
 const serverOptions = {
   debug: { request: ['error'] },
