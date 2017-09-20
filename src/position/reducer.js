@@ -21,7 +21,7 @@ export const defaultState = {
     time: null, // Time of last toggle.
     disabled: false, // Should we prevent toggle of alarm status?
   },
-  updateMeters: 0.7, // Update after having moved this many meters.
+  updateMeters: 0.8, // Update after having moved this many meters.
   limitSrc: null,
   savedPosition: null,
   lastPosition: position,
