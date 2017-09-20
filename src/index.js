@@ -8,12 +8,12 @@ import listeners from './listen'
 import { alarmDistance, limitSrc, waypointUpdate } from './position/actions'
 
 const waypoint = {
-  latitude: 38.96364, // 38.9634659, 38.963588
-  longitude: -76.480966, // -76.4809707, -76.481038
+  latitude: 38.963655, // 38.9634659, 38.963588
+  longitude: -76.480968, // -76.4809707, -76.481038
 }
 store.dispatch(waypointUpdate(waypoint))
 store.dispatch(limitSrc(130))
-store.dispatch(alarmDistance(21.4))
+store.dispatch(alarmDistance(23))
 
 const dispatch = dispatcher(store.dispatch)
 const state = store.getState()
