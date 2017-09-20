@@ -1,6 +1,6 @@
-import { get } from 'lodash'
+import { get, mapValues } from 'lodash'
 import Hapi from 'hapi'
-import { alarmDistance } from './position/actions'
+import { alarmDistance, waypointUpdate } from './position/actions'
 import { getWaypointDistance } from './position/select'
 
 const serverOptions = {
@@ -27,6 +27,12 @@ export default function init(store) {
     method: 'GET',
     path: '/position/waypoint/distance',
     handler: (request, reply) => reply(getWaypointDistance(store.getState().position)),
+  })
+  server.route({
+    method: 'GET',
+    path: '/position/waypoint/{latitude}/{longitude}',
+    handler: (request, reply) =>
+      reply(store.dispatch(waypointUpdate(mapValues(request.params, parseFloat)))),
   })
   server.route({
     method: 'GET',
