@@ -11,6 +11,6 @@ export function handleSerialData({ action, store }) {
   const { aisFeeds, lanBroadcast, lanPort, wanBroadcast, wanPort } = state.config
   if (action.payload.isAis) sendAis(action.payload.sentence, aisFeeds)
   if (lanBroadcast && lanPort) sendMsg(action.payload.sentence, lanBroadcast, lanPort)
-  if (wanBroadcast && wanPort) sendMsg(action.payload.sentence, lanBroadcast, lanPort)
+  if (wanBroadcast && wanPort) sendMsg(action.payload.sentence, wanBroadcast, wanPort)
   PubSub.publish('serial', action.payload)
 }
