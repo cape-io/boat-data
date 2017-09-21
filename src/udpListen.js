@@ -1,5 +1,5 @@
 import dgram from 'dgram'
-import { flow, over, toString } from 'lodash'
+import { flow, toString } from 'lodash'
 import { serialData, serialOpen } from './serial/actions'
 
 export default function listen(dispatcher, port = 10110) {
@@ -13,7 +13,7 @@ export default function listen(dispatcher, port = 10110) {
     serialOpen()
   })
 
-  socket.on('message', flow(toString, over(dispatcher(serialData), console.log)))
+  socket.on('message', flow(toString, dispatcher(serialData)))
   socket.bind(port)
   return true
 }
