@@ -21,6 +21,7 @@ export default {
       },
       { ip: '109.200.19.151', port: 4001, name: 'Ship Finder' },
     ],
+    udpListen: 10110,
   },
   data: {
   },
