@@ -1,13 +1,13 @@
 import dgram from 'dgram'
 
-const socket = dgram.createSocket('udp4')
-socket.bind(() => {
-  socket.setBroadcast(true)
+const server = dgram.createSocket('udp4')
+server.bind(() => {
+  server.setBroadcast(true)
 })
 
 export default function sendMsg(message, host, port) {
-  const data = new Buffer(message)
-  socket.send(data, 0, data.length, port, host, (err) => {
+  const data = Buffer.from(message)
+  server.send(data, 0, data.length, port, host, (err) => {
     if (err) throw err
     // console.log(message, host, port)
   })

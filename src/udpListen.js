@@ -1,15 +1,18 @@
 import dgram from 'dgram'
+import { serialData, serialOpen } from './serial/actions'
 
-const socket = dgram.createSocket('udp4')
+export default function listen(dispatcher, port = 10110) {
+  const socket = dgram.createSocket('udp4')
+  if (!port) {
+    return console.error('no port set in configuration.')
+  }
+  socket.on('listening', () => {
+    const address = socket.address()
+    console.log(`UDP Server listening on ${address.address}:${address.port}`)
+    serialOpen()
+  })
 
-socket.on('listening', () => {
-  const address = socket.address()
-  console.log(`UDP Server listening on ${address.address}:${address.port}`)
-})
-
-socket.on('message', (message, remote) => {
-  console.log(`${remote.address}:${remote.port} - ${message}`)
-  // console.log(message)
-  // process.stdout.write(message)
-})
-socket.bind(10110)
+  socket.on('message', dispatcher(serialData))
+  socket.bind(port)
+  return true
+}

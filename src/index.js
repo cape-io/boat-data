@@ -1,12 +1,14 @@
 import { dispatcher } from 'cape-redux'
 import initAnalyzer from './n2kAnalyzer'
 import initSerial from './serial'
+import initState from './initState'
 
-import store from './createStore'
+import createStore from './createStore'
 import server from './server'
 import listeners from './listen'
 import { alarmDistance, limitSrc, waypointUpdate } from './position/actions'
 
+const store = createStore(initState)
 const waypoint = {
   latitude: 38.963655, // 38.9634659, 38.963588
   longitude: -76.480968, // -76.4809707, -76.481038

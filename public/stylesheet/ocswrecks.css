@@ -1,0 +1,86 @@
+ html, body {
+    height: 100%;
+    width: 100%;
+	bottom: 10px;
+}
+
+.leaflet-container {
+	/*cursor: crosshair;*/
+	cursor: default;
+}
+  
+
+.grey_back {
+    background-color: #e5e5e5;
+    padding: 3px;
+    border: 2px solid #999999;
+}
+
+.transparent_white_back {
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4CFFFFFF, endColorstr=#4CFFFFFF);
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4CFFFFFF, endColorstr=#4CFFFFFF);
+    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.7);
+    border: solid 1px #b2b2b2;
+}
+
+.transparent_white_back_opaque {
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4CFFFFFF, endColorstr=#4CFFFFFF);
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4CFFFFFF, endColorstr=#4CFFFFFF);
+    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.8);
+    border: solid 1px #b2b2b2;
+}
+
+.font_small {
+    font-size: 8pt;
+}
+
+.legend_icon {
+    width: 40px; 
+    float: left; 
+    vertical-align: middle;
+}
+
+.legend_label {
+    float: left; 
+    width: 200px;
+}
+
+.legend_wrapper {
+    clear: both;
+}
+
+.legend_title {
+    clear: both;
+    margin-top: 5px;
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: center;
+}
+
+#legendButton {
+    position: absolute;
+    left: 60px;
+    top: 10px;
+    width: 120px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    z-index: 100;
+    text-align: center;
+    
+}
+
+#legend {
+    position: absolute;
+    left: 60px;
+    top: 35px;
+    width: 240px;
+    height: 300px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    z-index: 10;
+}
+

@@ -7,6 +7,7 @@
     "compile": "babel src --out-dir lib",
     "prepublish": "npm run compile",
     "start": "node lib",
+    "relay": "node lib/relay",
     "test": "jest --watch",
     "restart": "pm2 restart 0 && pm2 logs",
     "up": "git pull && npm run compile && npm run restart",
@@ -27,6 +28,7 @@
     "lodash": "^4.17.4",
     "mqtt": "^2.13.0",
     "plivo": "^0.4.1",
+    "pubsub-js": "^1.5.7",
     "redux": "^3.7.2",
     "reselect": "^3.0.1",
     "serialport": "^5.0.0"
