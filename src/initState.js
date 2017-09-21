@@ -15,18 +15,13 @@ export default {
     //devicePath: '/dev/tty.usbserial-2D80F',
   },
   config: {
-    aisFeeds: [
-      {
-        ip: '50.116.20.28',
-        port: 10110,
-        name: 'Dong',
-        // status: '',
-      },
-    ],
+    // aisFeeds: [],
     lanBroadcast: getBroadcast(lanIp),
     lanIp,
     lanPort: 10110,
     navionicsPort: 2000,
+    wanBroadcast: '50.116.20.28', // Dong
+    wanPort: 10110,
   },
   data: {
   },
