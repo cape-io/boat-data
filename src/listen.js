@@ -6,6 +6,7 @@ import sendMsg from './broadcast'
 import { dbt, mvw } from './nmea/encode'
 import anchorAlarm from './position/alarm'
 import sendSms from './plivo'
+import { sendUdp } from './actionHandlerSerial'
 
 const influx = new InfluxDB({
   host: 'localhost',
@@ -17,8 +18,9 @@ const influx = new InfluxDB({
 export const getDepth = get('data.data.115.128267.fields.Depth')
 function sendDepth(reduxStore, meters) {
   const state = reduxStore.getState()
-  sendMsg(dbt(meters), state.config.lanBroadcast, state.config.navionicsPort)
-  sendMsg(dbt(meters), state.config.lanBroadcast, state.config.lanPort)
+  const sentence = dbt(meters)
+  sendMsg(sentence, state.config.lanBroadcast, state.config.navionicsPort)
+  sendUdp(state.config, sentence)
   influx.writePoints([{ measurement: 'depth', fields: { value: meters } }])
   // console.log('depth', meters)
 }
@@ -30,7 +32,7 @@ function sendWind(reduxStore, speed) {
   const angle = getWindAngle(state)
   const sentence = mvw({ angle, reference: 'R', speed, unit: 'M' })
   // console.log('mvw', sentence)
-  sendMsg(sentence, state.config.lanBroadcast, state.config.lanPort)
+  sendUdp(state.config, sentence)
   influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
 }
 

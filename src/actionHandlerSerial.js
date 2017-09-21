@@ -5,12 +5,16 @@ import sendMsg from './broadcast'
 export function sendAis(sentence, feeds) {
   if (feeds) forEach(feeds, ({ ip, port }) => sendMsg(sentence, ip, port))
 }
+export function sendUdp(config, sentence) {
+  const { lanBroadcast, lanPort, wanBroadcast, wanPort } = config
+  if (lanBroadcast && lanPort) sendMsg(sentence, lanBroadcast, lanPort)
+  if (wanBroadcast && wanPort) sendMsg(sentence, wanBroadcast, wanPort)
+}
 // Sending off all AIS data.
 export function handleSerialData({ action, store }) {
   const state = store.getState()
-  const { aisFeeds, lanBroadcast, lanPort, wanBroadcast, wanPort } = state.config
+  const { aisFeeds } = state.config
   if (action.payload.isAis) sendAis(action.payload.sentence, aisFeeds)
-  if (lanBroadcast && lanPort) sendMsg(action.payload.sentence, lanBroadcast, lanPort)
-  if (wanBroadcast && wanPort) sendMsg(action.payload.sentence, wanBroadcast, wanPort)
+  sendUdp(state.config, action.payload.sentence)
   PubSub.publish('serial', action.payload)
 }
