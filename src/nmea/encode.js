@@ -23,3 +23,8 @@ export const mvw = ({ angle, reference = 'R', speed, unit = 'M' }) => toSentence
   unit,
   'A',
 ])
+export const hdm = heading => toSentence([
+  '--HDM',
+  heading.toFixed(1),
+  'M',
+])
