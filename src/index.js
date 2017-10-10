@@ -6,16 +6,10 @@ import initState from './initState'
 import createStore from './createStore'
 import server from './server'
 import listeners from './listen'
-import { alarmDistance, limitSrc, waypointUpdate } from './position/actions'
+import { limitSrc } from './position/actions'
 
 const store = createStore(initState)
-const waypoint = {
-  latitude: 38.963655, // 38.9634659, 38.963588
-  longitude: -76.480968, // -76.4809707, -76.481038
-}
-store.dispatch(waypointUpdate(waypoint))
 store.dispatch(limitSrc(130))
-store.dispatch(alarmDistance(23))
 
 const dispatch = dispatcher(store.dispatch)
 const state = store.getState()

@@ -29,6 +29,7 @@ export const defaultState = {
 }
 
 export function skipPos(state, payload) {
+  // Validate payload
   return !!state.limitSrc && state.limitSrc !== payload.src
 }
 // This _could_ be a memoized selector and not saved to state.
@@ -53,6 +54,7 @@ export const saveAlarm = condId([
   ),
 ])
 
+// This is giving an error sometimes.
 export const processPosUp = flow(
   addLastPos,
   addDistance,
@@ -61,7 +63,9 @@ export const processPosUp = flow(
 )
 export function positionUp(state, payload) {
   if (skipPos(state, payload)) return state
-  if (!state.savedPosition) return addLastPos(addSavedPos(state, payload), payload)
+  if (!state.savedPosition || !state.lastPosition) {
+    return addLastPos(addSavedPos(state, payload), payload)
+  }
   return processPosUp(state, payload)
 }
 export const alarmDisable = flow(
