@@ -3711,6 +3711,12 @@ redux-persist-node-storage@^1.0.2:
   dependencies:
     node-localstorage "^1.3.0"
 
+redux-persist-node-storage@webmasterkai/redux-persist-node-storage:
+  version "1.0.2"
+  resolved "https://codeload.github.com/webmasterkai/redux-persist-node-storage/tar.gz/377bdf928ce5b8ca24a117e577acd53201e82e30"
+  dependencies:
+    node-localstorage "^1.3.0"
+
 redux-persist@^5.x:
   version "5.0.0-rc.6"
   resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.0.0-rc.6.tgz#1207c707fa2d32d18f8e22c1845ba1aeb1d719f9"
