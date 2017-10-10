@@ -32,11 +32,11 @@
     "pubsub-js": "^1.5.7",
     "redux": "^3.7.2",
     "redux-persist": "^5.x",
-    "redux-persist-node-storage": "git://github.com/webmasterkai/redux-persist-node-storage.git#patch-1",
     "reselect": "^3.0.1",
     "serialport": "^5.0.0",
     "units-js": "^0.3.0",
-    "xml2js": "^0.4.19"
+    "xml2js": "^0.4.19",
+    "yarn": "^1.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
