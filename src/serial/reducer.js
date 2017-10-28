@@ -1,7 +1,7 @@
 import { flow } from 'lodash'
-import { mergeWith, setKey, setKeyVal } from 'cape-lodash'
+import { mergeWith, setIn, setKey, setKeyVal } from 'cape-lodash'
 import { createReducer } from 'cape-redux'
-import { SERIAL_CLOSE, SERIAL_ERROR, SERIAL_OPEN } from './actions'
+import { SERIAL_CLOSE, SERIAL_DATA, SERIAL_ERROR, SERIAL_OPEN } from './actions'
 
 const defaultState = {
   baudRate: null, // 38400,
@@ -23,8 +23,14 @@ export function ensureRunning(state) {
 }
 export const setClose = flow(setError, setClosed)
 
+export function setData(state, { name, sentence }) {
+  const path = ['data', name]
+  return setIn(path, state, sentence)
+}
+
 export const reducers = {
   [SERIAL_CLOSE]: setClose,
+  [SERIAL_DATA]: setData,
   [SERIAL_OPEN]: setOpen,
   [SERIAL_ERROR]: flow(setError, setClosed),
 }

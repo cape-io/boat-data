@@ -36,4 +36,8 @@ describe('positionUpdate', () => {
     expect(pos1.payload.time).toBeLessThan(time + 100)
     expect(actions[0].payload.time).toBe(positions[0][2])
   })
+  test('Should handle no coords', () => {
+    const pos2 = positionUpdate(null)
+    console.log(pos2)
+  })
 })
