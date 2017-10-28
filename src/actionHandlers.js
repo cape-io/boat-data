@@ -2,11 +2,7 @@ import { flow, get } from 'lodash/fp'
 import { condId, oneOf, renamePick } from 'cape-lodash'
 import { publish } from './mqtt'
 import { positionUpdate } from './position/actions'
-
-export function nextAction(props) {
-  props.next(props.action)
-  return props
-}
+import { nextAction } from './utils'
 
 export const getPayload = get(['action', 'payload'])
 
