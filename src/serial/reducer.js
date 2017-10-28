@@ -24,6 +24,7 @@ export function ensureRunning(state) {
 export const setClose = flow(setError, setClosed)
 
 export function setData(state, { name, sentence }) {
+  ensureRunning(state)
   const path = ['data', name]
   return setIn(path, state, sentence)
 }
