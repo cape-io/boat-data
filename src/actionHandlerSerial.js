@@ -1,6 +1,8 @@
 import { forEach } from 'lodash'
+import { flow } from 'lodash/fp'
 import PubSub from 'pubsub-js'
 import sendMsg from './broadcast'
+import { nextAction } from './utils'
 
 export function sendAis(sentence, feeds) {
   if (feeds) forEach(feeds, ({ ip, port }) => sendMsg(sentence, ip, port))
@@ -18,3 +20,7 @@ export function handleSerialData({ action, store }) {
   sendUdp(state.config, action.payload.sentence)
   PubSub.publish('serial', action.payload)
 }
+export default flow(
+  nextAction,
+  handleSerialData,
+)
