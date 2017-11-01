@@ -24,14 +24,12 @@ export function ensureRunning(state) {
 export const setClose = flow(setError, setClosed)
 
 export function setData(state, { name, sentence }) {
-  ensureRunning(state)
-  const path = ['data', name]
-  return setIn(path, state, sentence)
+  return setIn(['data', name], state, sentence)
 }
 
 export const reducers = {
   [SERIAL_CLOSE]: setClose,
-  [SERIAL_DATA]: setData,
+  [SERIAL_DATA]: flow(setData, ensureRunning),
   [SERIAL_OPEN]: setOpen,
   [SERIAL_ERROR]: flow(setError, setClosed),
 }
