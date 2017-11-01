@@ -18,10 +18,10 @@ export default {
     // aisFeeds: [],
     lanBroadcast: getBroadcast(lanIp),
     lanIp,
-    lanPort: 10110,
+    lanPort: 10112,
     navionicsPort: 2000,
     wanBroadcast: '50.116.20.28', // Dong
-    wanPort: 10112,
+    wanPort: 10110,
   },
   data: {
   },
