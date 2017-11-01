@@ -21,7 +21,7 @@ export default {
     lanPort: 10110,
     navionicsPort: 2000,
     wanBroadcast: '50.116.20.28', // Dong
-    wanPort: 10110,
+    wanPort: 10112,
   },
   data: {
   },
