@@ -28,8 +28,9 @@ export const defaultState = {
   waypoint: null,
 }
 
+// Validate payload. Should we skip this type of position?
 export function skipPos(state, payload) {
-  // Validate payload
+  if (!payload.latitude || !payload.longitude) return true
   return !!state.limitSrc && state.limitSrc !== payload.src
 }
 // This _could_ be a memoized selector and not saved to state.
@@ -61,6 +62,8 @@ export const processPosUp = flow(
   savePosition,
   saveAlarm,
 )
+
+// This was erroring out on start because payload doesn't always have position but could have time.
 export function positionUp(state, payload) {
   if (skipPos(state, payload)) return state
   if (!state.savedPosition || !state.lastPosition) {
