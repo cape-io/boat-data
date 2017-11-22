@@ -26,10 +26,8 @@ export function sendGps({ action, store }) {
   store.dispatch(positionUpdate(payload))
   publish('gps', JSON.stringify(payload))
 }
-export function sendHeading(reduxStore, heading) {
-  const state = reduxStore.getState()
-  const sentence = hdm(heading)
-  sendUdp(state.config, sentence)
+export function sendHeading({ action, store }) {
+  sendUdp(store.getState().config, hdm(action.payload.fields.Heading))
 }
 
 export const handleAnalyzer = flow(
