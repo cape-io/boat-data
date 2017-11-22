@@ -1,5 +1,5 @@
 import { get, set, reduce } from 'lodash'
-import { flow, has, prop } from 'lodash/fp'
+import { flow, prop } from 'lodash/fp'
 
 export function reduceSrc(accumulator, pgns, src) {
   return reduce(
