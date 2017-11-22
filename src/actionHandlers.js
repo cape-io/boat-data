@@ -1,6 +1,6 @@
 import { eq, flow, get } from 'lodash/fp'
 import { condId, oneOf, renamePick } from 'cape-lodash'
-import { hdm } from './nmea/encode'
+import { hdm, mvw } from './nmea/encode'
 import { publish } from './mqtt'
 import { positionUpdate } from './position/actions'
 import { nextAction } from './utils'
@@ -16,6 +16,8 @@ export const gpsPgns = [
 
 export const isGpsPgn = flow(getPgn, oneOf(gpsPgns))
 export const isHeadingPgn = flow(getPgn, eq(127250))
+export const isWindPgn = flow(getPgn, eq(130306))
+
 export const getLatLong = renamePick({
   'fields.Latitude': 'latitude',
   'fields.Longitude': 'longitude',
@@ -30,10 +32,24 @@ export function sendHeading({ action, store }) {
   sendUdp(store.getState().config, hdm(action.payload.fields.Heading))
 }
 
+function sendWind({ action, store }) {
+  const wind = action.payload.fields
+  const sentence = mvw({
+    angle: wind['Wind Angle'],
+    reference: 'R',
+    speed: wind['Wind Speed'],
+    unit: 'M',
+  })
+  // console.log('mvw', sentence)
+  sendUdp(store.getState().config, sentence)
+  // influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
+}
+
 export const handleAnalyzer = flow(
   nextAction,
   condId(
     [isGpsPgn, sendGps],
     [isHeadingPgn, sendHeading],
+    [isWindPgn, sendWind]
   ),
 )
