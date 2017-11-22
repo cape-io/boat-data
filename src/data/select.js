@@ -1,5 +1,5 @@
 import { get, set, reduce } from 'lodash'
-import { has } from 'lodash/fp'
+import { has, prop } from 'lodash/fp'
 import { createSelector } from 'reselect'
 
 // Create an index keyed by pgn -> src.
@@ -12,7 +12,7 @@ export function keyByPgn(state) {
   return reduce(state, srcReducer, {})
 }
 
-export const getPgnSrc = createSelector(get('data'), keyByPgn)
+export const getPgnSrc = createSelector(prop('data'), keyByPgn)
 
 // Get specific pgn for each src.
 export function getPgn(pgn) {
