@@ -1,24 +1,31 @@
 import { get, set, reduce } from 'lodash'
-import { has, prop } from 'lodash/fp'
-import { createSelector } from 'reselect'
+import { flow, has, prop } from 'lodash/fp'
+
+export function reduceSrc(accumulator, pgns, src) {
+  return reduce(
+    pgns,
+    (result, value, pgn) => set(
+      set(result, pgn, get(result, pgn, {})),
+      [pgn, src],
+      value
+    ),
+    accumulator
+  )
+}
 
 // Create an index keyed by pgn -> src.
 export function keyByPgn(state) {
-  const srcReducer = (accumulator, pgns, src) => reduce(
-    pgns,
-    (result, pgn, value) => set(result, [pgn, src], value),
-    accumulator
-  )
-  return reduce(state, srcReducer, {})
+  return reduce(state, reduceSrc, {})
 }
 
-export const getPgnSrc = createSelector(prop('data'), keyByPgn)
+export const getData = prop('data')
+export const getPgnSrc = flow(getData, keyByPgn)
 
 // Get specific pgn for each src.
-export function getPgn(pgn) {
+export function getPgn(state, pgn) {
   function pgnReducer(accumulator, value, key) {
-    if (has(value, pgn)) return set(accumulator, key, get(value, pgn))
+    if (value[pgn]) return set(accumulator, key, get(value, pgn))
     return accumulator
   }
-  return state => reduce(state, pgnReducer, {})
+  return reduce(getData(state), pgnReducer, {})
 }

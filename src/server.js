@@ -2,7 +2,7 @@ import { get, mapValues } from 'lodash'
 import Hapi from 'hapi'
 import { alarmDistance, waypointUpdate } from './position/actions'
 import { getWaypointDistance } from './position/select'
-import { getPgnSrc } from './data/select'
+import { getPgn, getPgnSrc } from './data/select'
 
 const serverOptions = {
   debug: { request: ['error'] },
@@ -23,11 +23,11 @@ export default function init(store) {
     path: '/data/pgn',
     handler: (request, reply) => reply(getPgnSrc(store.getState())),
   })
-  // server.route({
-  //   method: 'GET',
-  //   path: '/data/pgn/{pgn}',
-  //   handler: (request, reply) => reply(getPgnSrc(store.getState())),
-  // })
+  server.route({
+    method: 'GET',
+    path: '/data/pgn/{pgn}',
+    handler: (request, reply) => reply(getPgn(store.getState(), request.params.pgn)),
+  })
   server.route({
     method: 'GET',
     path: '/position/alarm/distance/{meters}',

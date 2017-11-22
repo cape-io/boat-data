@@ -1,5 +1,5 @@
-import { get, reduce } from 'lodash'
-import { flow, prop, pick } from 'lodash/fp'
+// import { get, reduce } from 'lodash'
+// import { flow, prop, pick } from 'lodash/fp'
 import { setIn } from 'cape-lodash'
 import { createReducer } from 'cape-redux'
 import { ANALYZER_DATA } from '../n2kAnalyzer/actions'
@@ -23,7 +23,7 @@ import { ANALYZER_DATA } from '../n2kAnalyzer/actions'
 // }
 
 export function setData(state, payload) {
-  return setIn(['data', payload.src, payload.pgn], state, payload)
+  return setIn([payload.src, payload.pgn], state, payload)
 }
 export const reducers = {
   [ANALYZER_DATA]: setData,
