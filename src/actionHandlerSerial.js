@@ -20,6 +20,7 @@ export function sendUdp(config, { name, isAis, sentence }) {
     sendUdpLan(config, sentence)
     // Send position information to Navionics.
     if (name === 'GPGGA') sendUdpNavionics(config, sentence)
+    if (name === 'GPRMC') sendUdpNavionics(config, sentence)
   }
   // Send data to wide network.
   // Proxy Server.
