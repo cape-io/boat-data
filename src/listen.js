@@ -5,7 +5,7 @@ import sendMsg from './broadcast'
 import { dbt } from './nmea/encode'
 import anchorAlarm from './position/alarm'
 import sendSms from './plivo'
-import { sendUdp } from './actionHandlerSerial'
+import { sendUdpLan, sendUdpNavionics } from './actionHandlerSerial'
 
 const influx = new InfluxDB({
   host: 'localhost',
@@ -19,7 +19,8 @@ function sendDepth(reduxStore, meters) {
   const state = reduxStore.getState()
   const sentence = dbt(meters)
   sendMsg(sentence, state.config.lanBroadcast, state.config.navionicsPort)
-  sendUdp(state.config, sentence)
+  sendUdpLan(state.config, sentence)
+  sendUdpNavionics(state.config, sentence)
   influx.writePoints([{ measurement: 'depth', fields: { value: meters } }])
   // console.log('depth', meters)
 }
