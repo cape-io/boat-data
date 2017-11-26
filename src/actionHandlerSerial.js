@@ -24,7 +24,11 @@ export function sendUdp(config, { name, isAis, sentence }) {
 
 // Sending off all AIS data.
 export function handleSerialData({ action, store }) {
-  sendUdp(store.getState().config, action.payload)
+  if (action.payload) {
+    sendUdp(store.getState().config, action.payload)
+  } else {
+    console.error(action)
+  }
   PubSub.publish('serial', action.payload)
 }
 
