@@ -4,7 +4,7 @@ import { hdm, mvw } from './nmea/encode'
 import { publish } from './mqtt'
 import { positionUpdate } from './position/actions'
 import { nextAction } from './utils'
-import { sendUdp } from './actionHandlerSerial'
+import { sendUdpLan } from './actionHandlerSerial'
 
 export const getPayload = get(['action', 'payload'])
 export const getPgn = flow(getPayload, get('pgn'))
@@ -29,7 +29,7 @@ export function sendGps({ action, store }) {
   publish('gps', JSON.stringify(payload))
 }
 export function sendHeading({ action, store }) {
-  sendUdp(store.getState().config, hdm(action.payload.fields.Heading))
+  sendUdpLan(store.getState().config, hdm(action.payload.fields.Heading))
 }
 
 function sendWind({ action, store }) {
@@ -41,7 +41,7 @@ function sendWind({ action, store }) {
     unit: 'M',
   })
   // console.log('mvw', sentence)
-  sendUdp(store.getState().config, sentence)
+  sendUdpLan(store.getState().config, sentence)
   // influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
 }
 
