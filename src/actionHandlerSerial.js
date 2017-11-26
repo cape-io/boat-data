@@ -7,19 +7,27 @@ import { nextAction } from './utils'
 export function sendAis(sentence, feeds) {
   if (feeds) forEach(feeds, ({ ip, port }) => sendMsg(sentence, ip, port))
 }
-export function sendUdp(config, sentence) {
-  const { lanBroadcast, lanPort, wanBroadcast, wanPort } = config
-  if (lanBroadcast && lanPort) sendMsg(sentence, lanBroadcast, lanPort)
+export function sendUdp(config, { name, isAis, sentence }) {
+  const { aisFeeds, lanBroadcast, lanPort, navionicsPort, wanBroadcast, wanPort } = config
+  // Send data to local network.
+  if (lanBroadcast) {
+    if (lanPort) sendMsg(sentence, lanBroadcast, lanPort)
+    // Send position information to Navionics.
+    if (name === 'GPGGA') sendMsg(sentence, lanBroadcast, navionicsPort)
+  }
+  // Send data to wide network.
+  // Proxy Server.
   if (wanBroadcast && wanPort) sendMsg(sentence, wanBroadcast, wanPort)
+  // AIS services.
+  if (aisFeeds && isAis) sendAis(sentence, aisFeeds)
 }
+
 // Sending off all AIS data.
 export function handleSerialData({ action, store }) {
-  const state = store.getState()
-  const { aisFeeds } = state.config
-  if (action.payload.isAis) sendAis(action.payload.sentence, aisFeeds)
-  sendUdp(state.config, action.payload.sentence)
+  sendUdp(store.getState().config, action.payload)
   PubSub.publish('serial', action.payload)
 }
+
 export default flow(
   nextAction,
   handleSerialData,
