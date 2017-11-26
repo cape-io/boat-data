@@ -19,6 +19,7 @@ export function sendUdp(config, { name, isAis, sentence }) {
   if (lanBroadcast) {
     sendUdpLan(config, sentence)
     // Send position information to Navionics.
+    if (name === 'GPGGA') sendUdpNavionics(config, sentence)
     if (name === 'GPRMC') sendUdpNavionics(config, sentence)
   }
   // Send data to wide network.
