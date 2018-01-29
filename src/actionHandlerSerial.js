@@ -19,8 +19,9 @@ export function sendUdp(config, { name, isAis, sentence }) {
   if (lanBroadcast) {
     sendUdpLan(config, sentence)
     // Send position information to Navionics.
-    if (name === 'GPGGA') sendUdpNavionics(config, sentence)
+    if (name === 'GPGGA') sendUdpNavionics(config, sentence) // EPIRB Wants This
     if (name === 'GPRMC') sendUdpNavionics(config, sentence)
+    // if (name === 'GPGLL') // Latitude and Longitude
   }
   // Send data to wide network.
   // Proxy Server.
