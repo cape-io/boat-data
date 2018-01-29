@@ -7,6 +7,8 @@ export default function init() {
   function handleConnection(conn) {
     const remoteAddress = `${conn.remoteAddress}:${conn.remotePort}`
     console.log('new client connection from %s', remoteAddress)
+
+    // Listens for data via PubSub
     const subToken = PubSub.subscribe('serial', (msg, { sentence }) =>
       sentence && conn.write(sentence))
 

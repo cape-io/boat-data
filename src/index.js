@@ -5,6 +5,7 @@ import initState from './initState'
 
 import createStore from './createStore'
 import server from './server'
+import tcpServer from './tcp/connect'
 import listeners from './listen'
 import { limitSrc } from './position/actions'
 
@@ -18,7 +19,7 @@ initAnalyzer(dispatch, state.analyzer.devicePath)
 initSerial(dispatch, state.ais)
 server(store)
 listeners(store)
-
+tcpServer()
 // setInterval(() => {
 //   console.log(JSON.stringify(store.getState().data, null, 2))
 // }, 3000)
