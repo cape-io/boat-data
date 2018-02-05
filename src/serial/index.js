@@ -9,6 +9,10 @@ export default function initSerial(dispatcher, options) {
   const serial = new SerialPort(devicePath, {
     baudRate,
   })
+  // Open errors will be emitted as an error event
+  serial.on('error', (err) => {
+    console.error('SerialError: ', err.message)
+  })
   serial.pipe(parser)
   parser.on('open', dispatcher(serialOpen))
   parser.on('error', dispatcher(serialErr))
