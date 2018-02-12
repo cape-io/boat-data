@@ -11,7 +11,7 @@ export default function initSerial(dispatcher, options) {
     baudRate,
   })
   const handleError = overEvery([console.error, dispatcher(serialErr)])
-  handleError('testing')
+  // handleError('testing')
   // Open errors will be emitted as an error event
   serial.on('error', handleError)
   serial.pipe(parser)
