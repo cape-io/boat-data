@@ -16,6 +16,7 @@ const influx = new InfluxDB({
 // 35 128267
 export const getDepth = get('data.115.128267.fields.Depth')
 function sendDepth(reduxStore, meters) {
+  if (meters > 145) return
   const state = reduxStore.getState()
   const sentence = dbt(meters)
   sendMsg(sentence, state.config.lanBroadcast, state.config.navionicsPort)
