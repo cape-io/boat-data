@@ -14,7 +14,7 @@ store.dispatch(limitSrc(130))
 
 const dispatch = dispatcher(store.dispatch)
 const state = store.getState()
-console.log(state)
+// console.log(state)
 initAnalyzer(dispatch, state.analyzer.devicePath)
 initSerial(dispatch, state.ais)
 server(store)
