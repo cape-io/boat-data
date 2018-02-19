@@ -1,13 +1,15 @@
-import { eq, flow, get } from 'lodash/fp'
+import { eq, flow, get, lt, overEvery } from 'lodash/fp'
 import { condId, oneOf, renamePick } from 'cape-lodash'
-import { hdm, mvw } from './nmea/encode'
+import { select } from 'cape-select'
+import { hdm } from './nmea/encode'
 import { publish } from './mqtt'
 import { positionUpdate } from './position/actions'
 import { nextAction } from './utils'
 import { sendUdpLan } from './actionHandlerSerial'
+import { sendDepth, sendWind } from './dataHandler'
 
 export const getPayload = get(['action', 'payload'])
-export const getPgn = flow(getPayload, get('pgn'))
+export const getPgn = select(getPayload, 'pgn')
 export const gpsPgns = [
   129793, // AIS UTC and Date Report
   // 129025, // Position, Rapid Update
@@ -17,7 +19,11 @@ export const gpsPgns = [
 export const isGpsPgn = flow(getPgn, oneOf(gpsPgns))
 export const isHeadingPgn = flow(getPgn, eq(127250))
 export const isWindPgn = flow(getPgn, eq(130306))
-
+export const isDepthPgn = flow(getPgn, eq(128267))
+export const isDepth = overEvery([
+  isDepthPgn,
+  flow(select(getPayload, 'fields.Offset'), lt(0.1)), // Use new depth.
+])
 export const getLatLong = renamePick({
   'fields.Latitude': 'latitude',
   'fields.Longitude': 'longitude',
@@ -32,24 +38,20 @@ export function sendHeading({ action, store }) {
   sendUdpLan(store.getState().config, hdm(action.payload.fields.Heading))
 }
 
-function sendWind({ action, store }) {
-  const wind = action.payload.fields
-  const sentence = mvw({
-    angle: wind['Wind Angle'],
-    reference: 'R',
-    speed: wind['Wind Speed'],
-    unit: 'M',
-  })
-  // console.log('mvw', sentence)
-  sendUdpLan(store.getState().config, sentence)
-  // influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
+function handleWind({ action, store }) {
+  const data = action.payload.fields
+  sendWind(store.getState().config, data['Wind Angle'], data['Wind Speed'])
 }
-
+function handleDepth({ action, store }) {
+  const data = action.payload.fields
+  sendDepth(store.getState().config, data.Depth)
+}
 export const handleAnalyzer = flow(
   nextAction,
   condId(
     [isGpsPgn, sendGps],
     [isHeadingPgn, sendHeading],
-    [isWindPgn, sendWind]
+    [isWindPgn, handleWind],
+    [isDepthPgn, handleDepth]
   ),
 )

@@ -1,0 +1,22 @@
+import { influx, sendUdpLan, sendUdpNavionics } from './broadcast'
+import { dbt, mvw } from './nmea/encode'
+
+export function sendDepth(config, meters) {
+  // Do not send really deep readings because they are probably wrong.
+  if (meters > 145) return
+  const sentence = dbt(meters)
+  sendUdpLan(config, sentence)
+  sendUdpNavionics(config, sentence)
+  influx.writePoints([{ measurement: 'depth', fields: { value: meters } }])
+  // console.log('depth', meters)
+}
+export function sendWind(config, angle, speed) {
+  const sentence = mvw({
+    angle,
+    reference: 'R',
+    speed,
+    unit: 'M',
+  })
+  sendUdpLan(config, sentence)
+  influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
+}
