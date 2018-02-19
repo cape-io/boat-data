@@ -35,7 +35,7 @@ export const serialErr = overEvery([
   createSimpleAction(SERIAL_ERROR, toString),
 ])
 export const PARSER_ERROR = 'serial/ParserError'
-export const parserError = noopAction(PARSER_ERROR)
+export const parserErr = noopAction(PARSER_ERROR)
 
 export const SERIAL_OPEN = 'serial/SerialOpen'
 export function serialOpen() {
