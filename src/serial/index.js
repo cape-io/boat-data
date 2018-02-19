@@ -37,7 +37,7 @@ export default function initSerial(dispatcher, options) {
     serial.on('close', onClose)
     serial.on('open', onOpen)
   }
-
+  console.log(parserOpen)
   parser.on('open', dispatcher(parserOpen))
   parser.on('error', dispatcher(parserErr))
   parser.on('close', dispatcher(parserClose))
