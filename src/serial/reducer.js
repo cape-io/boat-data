@@ -1,7 +1,10 @@
 import { flow } from 'lodash'
 import { mergeWith, setIn, setKey, setKeyVal } from 'cape-lodash'
 import { createReducer } from 'cape-redux'
-import { SERIAL_CLOSE, SERIAL_DATA, SERIAL_ERROR, SERIAL_OPEN } from './actions'
+import {
+  PARSER_COSE, PARSER_OPEN,
+  SERIAL_CLOSE, SERIAL_DATA, SERIAL_ERROR, SERIAL_OPEN,
+} from './actions'
 
 const defaultState = {
   baudRate: null, // 38400,
@@ -11,6 +14,7 @@ const defaultState = {
   isOpen: false,
   isRunning: false,
   isStarting: false,
+  parserOpen: false,
 }
 
 export const setClosed = mergeWith({ isOpen: false, isRunning: false })
@@ -29,8 +33,10 @@ export function setData(state, { name, sentence }) {
 
 export const reducers = {
   [SERIAL_CLOSE]: setClose,
+  [PARSER_COSE]: mergeWith({ parserOpen: false }),
   [SERIAL_DATA]: flow(setData, ensureRunning),
   [SERIAL_OPEN]: setOpen,
+  [PARSER_OPEN]: setKeyVal('parserOpen', true),
   [SERIAL_ERROR]: flow(setError, setClosed),
 }
 export default createReducer(reducers, defaultState)

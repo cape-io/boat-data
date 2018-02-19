@@ -1,5 +1,8 @@
 import SerialPort from 'serialport'
-import { serialClose, serialData, serialErr, serialOpen } from './actions'
+import {
+  parserClose, parserErr, parserOpen,
+  serialClose, serialData, serialErr, serialOpen,
+} from './actions'
 
 export default function initSerial(dispatcher, options) {
   const { baudRate, devicePath } = options
@@ -15,6 +18,7 @@ export default function initSerial(dispatcher, options) {
     serial.unpipe(parser)
     serial.removeAllListeners()
     serial = null
+    console.log('serial cleared', devicePath)
   }
   function start() {
     cleanup()
@@ -25,14 +29,18 @@ export default function initSerial(dispatcher, options) {
       handleClose(err)
       start()
     }
+    function onOpen() {
+      serial.pipe(parser)
+      handleOpen()
+    }
     serial.on('error', handleError)
     serial.on('close', onClose)
-    serial.pipe(parser)
+    serial.on('open', onOpen)
   }
 
-  parser.on('open', handleOpen)
-  parser.on('error', handleError)
-  parser.on('close', handleClose)
+  parser.on('open', dispatcher(parserOpen))
+  parser.on('error', dispatcher(parserErr))
+  parser.on('close', dispatcher(parserClose))
   parser.on('data', dispatcher(serialData))
   start()
   // console.log('Serial is open?', serial.isOpen)
