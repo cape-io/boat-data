@@ -27,7 +27,9 @@ export default function initSerial(dispatcher, options) {
     })
     function onClose(err) {
       handleClose(err)
-      start()
+      SerialPort.list()
+      .then(console.log)
+      .then(start)
     }
     function onOpen() {
       serial.pipe(parser)
@@ -37,7 +39,6 @@ export default function initSerial(dispatcher, options) {
     serial.on('close', onClose)
     serial.on('open', onOpen)
   }
-  console.log(parserOpen)
   parser.on('open', dispatcher(parserOpen))
   parser.on('error', dispatcher(parserErr))
   parser.on('close', dispatcher(parserClose))
