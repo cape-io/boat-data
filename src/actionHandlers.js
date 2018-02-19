@@ -5,7 +5,7 @@ import { hdm } from './nmea/encode'
 import { publish } from './mqtt'
 import { positionUpdate } from './position/actions'
 import { nextAction } from './utils'
-import { sendUdpLan } from './actionHandlerSerial'
+import { sendUdpLan } from './broadcast'
 import { sendDepth, sendWind } from './dataHandler'
 
 export const getPayload = get(['action', 'payload'])
