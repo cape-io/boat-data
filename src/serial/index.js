@@ -10,12 +10,15 @@ export default function initSerial(dispatcher, options) {
   const handleError = dispatcher(serialErr)
   const handleClose = dispatcher(serialClose)
   const handleOpen = dispatcher(serialOpen)
-  const parser = new SerialPort.parsers.Readline()
 
   let serial = null
+  let parser = null
+
   function cleanup() {
     if (serial === null) return
     serial.unpipe(parser)
+    parser.removeAllListeners()
+    parser = null
     serial.removeAllListeners()
     serial = null
     console.log('serial cleared', devicePath)
@@ -32,6 +35,11 @@ export default function initSerial(dispatcher, options) {
       .then(start)
     }
     function onOpen() {
+      parser = new SerialPort.parsers.Readline()
+      parser.on('open', dispatcher(parserOpen))
+      parser.on('error', dispatcher(parserErr))
+      parser.on('close', dispatcher(parserClose))
+      parser.on('data', dispatcher(serialData))
       serial.pipe(parser)
       handleOpen()
     }
@@ -39,10 +47,6 @@ export default function initSerial(dispatcher, options) {
     serial.on('close', onClose)
     serial.on('open', onOpen)
   }
-  parser.on('open', dispatcher(parserOpen))
-  parser.on('error', dispatcher(parserErr))
-  parser.on('close', dispatcher(parserClose))
-  parser.on('data', dispatcher(serialData))
   start()
   // console.log('Serial is open?', serial.isOpen)
 }
