@@ -10,6 +10,7 @@ import { sendDepth, sendWind } from './dataHandler'
 
 export const getPayload = get(['action', 'payload'])
 export const getPgn = select(getPayload, 'pgn')
+export const getFields = select(getPayload, 'fields')
 export const gpsPgns = [
   129793, // AIS UTC and Date Report
   // 129025, // Position, Rapid Update
@@ -22,7 +23,7 @@ export const isWindPgn = flow(getPgn, eq(130306))
 export const isDepthPgn = flow(getPgn, eq(128267))
 export const isDepth = overEvery([
   isDepthPgn,
-  flow(select(getPayload, 'fields.Offset'), lt(0.1)), // Use new depth.
+  flow(select(getFields, 'Offset'), lt(0.1)), // Use new depth.
 ])
 export const getLatLong = renamePick({
   'fields.Latitude': 'latitude',
@@ -52,6 +53,6 @@ export const handleAnalyzer = flow(
     [isGpsPgn, sendGps],
     [isHeadingPgn, sendHeading],
     [isWindPgn, handleWind],
-    [isDepthPgn, handleDepth]
+    [isDepth, handleDepth]
   ),
 )

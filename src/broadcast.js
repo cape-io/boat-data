@@ -29,6 +29,7 @@ export function sendUdpLan({ lanBroadcast, lanPort }, sentence) {
 export function sendUdpNavionics({ lanBroadcast, navionicsPort }, sentence) {
   if (navionicsPort) sendMsg(sentence, lanBroadcast, navionicsPort)
 }
+// Send some over network.
 export function sendUdp(config, { name, isAis, sentence }) {
   const { aisFeeds, lanBroadcast, wanBroadcast, wanPort } = config
   // Send data to local network.
