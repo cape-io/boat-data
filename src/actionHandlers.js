@@ -45,7 +45,7 @@ function handleWind({ action, store }) {
 }
 function handleDepth({ action, store }) {
   const data = action.payload.fields
-  sendDepth(store.getState().config, data.Depth)
+  sendDepth(store.getState().config, (data.Depth + data.Offset))
 }
 export const handleAnalyzer = flow(
   nextAction,
