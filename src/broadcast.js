@@ -1,6 +1,7 @@
 import { forEach } from 'lodash'
 import dgram from 'dgram'
 import { InfluxDB } from 'influx'
+import PubSub from 'pubsub-js'
 
 const server = dgram.createSocket('udp4')
 server.bind(() => {
@@ -45,4 +46,5 @@ export function sendUdp(config, { name, isAis, sentence }) {
   if (wanBroadcast && wanPort) sendMsg(sentence, wanBroadcast, wanPort)
   // AIS services.
   if (aisFeeds && isAis) sendAis(sentence, aisFeeds)
+  PubSub.publish('serial', { sentence })
 }

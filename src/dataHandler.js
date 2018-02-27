@@ -1,14 +1,12 @@
-import PubSub from 'pubsub-js'
-import { influx, sendUdpLan, sendUdpNavionics } from './broadcast'
+import { influx, sendUdp, sendUdpNavionics } from './broadcast'
 import { dbt, mvw } from './nmea/encode'
 
 export function sendDepth(config, meters) {
   // Do not send really deep readings because they are probably wrong.
   if (meters > 145) return
   const sentence = dbt(meters)
-  sendUdpLan(config, sentence)
+  sendUdp(config, { name: 'DBT', sentence })
   sendUdpNavionics(config, sentence)
-  PubSub.publish('serial', { sentence })
   influx.writePoints([{ measurement: 'depth', fields: { value: meters } }])
   // console.log('depth', meters)
 }
@@ -19,7 +17,6 @@ export function sendWind(config, angle, speed) {
     speed,
     unit: 'M',
   })
-  sendUdpLan(config, sentence)
-  PubSub.publish('serial', { sentence })
+  sendUdp(config, { name: 'DBT', sentence })
   influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
 }

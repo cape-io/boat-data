@@ -11,7 +11,7 @@ export function handleSerialData({ action, store }) {
   } else {
     console.error(action)
   }
-  PubSub.publish('serial', action.payload)
+  // PubSub.publish('serial', action.payload)
 }
 
 export default flow(
