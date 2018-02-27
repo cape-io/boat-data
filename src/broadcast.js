@@ -40,11 +40,11 @@ export function sendUdp(config, { name, isAis, sentence }) {
     if (name === 'GPGGA') sendUdpNavionics(config, sentence) // EPIRB Wants This
     if (name === 'GPRMC') sendUdpNavionics(config, sentence)
     // if (name === 'GPGLL') // Latitude and Longitude
+    PubSub.publish('serial', { sentence })
   }
   // Send data to wide network.
   // Proxy Server.
   if (wanBroadcast && wanPort) sendMsg(sentence, wanBroadcast, wanPort)
   // AIS services.
   if (aisFeeds && isAis) sendAis(sentence, aisFeeds)
-  PubSub.publish('serial', { sentence })
 }
