@@ -8,8 +8,8 @@ export function sendDepth(config, meters) {
   const sentence = dbt(meters)
   sendUdpLan(config, sentence)
   sendUdpNavionics(config, sentence)
+  PubSub.publish('serial', { sentence })
   influx.writePoints([{ measurement: 'depth', fields: { value: meters } }])
-  PubSub.publish('serial', sentence)
   // console.log('depth', meters)
 }
 export function sendWind(config, angle, speed) {
@@ -20,6 +20,6 @@ export function sendWind(config, angle, speed) {
     unit: 'M',
   })
   sendUdpLan(config, sentence)
+  PubSub.publish('serial', { sentence })
   influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
-  PubSub.publish('serial', sentence)
 }
