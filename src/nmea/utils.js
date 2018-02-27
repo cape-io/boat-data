@@ -20,5 +20,5 @@ export const getChecksum = flow(
 // Conventional field delimited messages. Start delimiter is always $.
 export function toSentence(parts) {
   const base = parts.join(',')
-  return `$${base}*${getChecksum(base)}\r\n`
+  return `$${base}*${getChecksum(base)}\n`
 }

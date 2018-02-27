@@ -5,7 +5,7 @@ import { hdm } from './nmea/encode'
 import { publish } from './mqtt'
 import { positionUpdate } from './position/actions'
 import { nextAction } from './utils'
-import { sendUdpLan } from './broadcast'
+import { sendUdp } from './broadcast'
 import { sendDepth, sendWind } from './dataHandler'
 
 export const getPayload = get(['action', 'payload'])
@@ -36,7 +36,8 @@ export function sendGps({ action, store }) {
   publish('gps', JSON.stringify(payload))
 }
 export function sendHeading({ action, store }) {
-  sendUdpLan(store.getState().config, hdm(action.payload.fields.Heading))
+  const sentence = hdm(action.payload.fields.Heading)
+  sendUdp(store.getState().config, { name: 'HDM', sentence })
 }
 
 function handleWind({ action, store }) {

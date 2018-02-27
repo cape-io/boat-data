@@ -17,6 +17,6 @@ export function sendWind(config, angle, speed) {
     speed,
     unit: 'M',
   })
-  sendUdp(config, { name: 'DBT', sentence })
+  sendUdp(config, { name: 'MVW', sentence })
   influx.writePoints([{ measurement: 'windSpeed', fields: { value: speed } }])
 }
