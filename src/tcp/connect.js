@@ -10,7 +10,7 @@ export default function init() {
 
     // Listens for data via PubSub
     const subToken = PubSub.subscribe('serial', (msg, { sentence }) =>
-      sentence && conn.write(sentence))
+      sentence && conn.write(sentence.replace('\r', '\n')))
 
     function onConnData(data) {
       console.log('connection data from %s: %j', remoteAddress, data)
