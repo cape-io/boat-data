@@ -1,10 +1,10 @@
 import { RestAPI } from 'plivo'
 
-const authId = 'MANJHMNMRMNMFMYWVMZT'
-const authToken = 'YmQyZDc5MDEzNGUxOGIyOGEwNjk1ZTRiYzg5Njgx'
+const authId = ''
+const authToken = ''
 const client = RestAPI({ authId, authToken })
 
-const plivoPhoneNumber = '16513622062'
+const plivoPhoneNumber = ''
 
 function getParams({ dst, text }) {
   return {
