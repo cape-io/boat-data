@@ -13,6 +13,7 @@ export function subBits(num, start, length) {
 }
 
 // Get a slice of up to 32 bits from a Uint8Array.
+// @param start: The bit index.
 export function get32(arr, start, length) {
   // Find the first byte needed from the array.
   let byteIndex = start / 8 | 0

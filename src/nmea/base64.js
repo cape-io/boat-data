@@ -19,7 +19,8 @@ function placeHoldersCount(b64) {
   // represent one byte
   // if there is only one, then the three characters before it represent 2 bytes
   // this is just a cheap hack to not do indexOf twice
-  return (b64[len - 2] === '=' ? 2 : (b64[len - 1] === '=' ? 1 : 0))
+  if (b64[len - 2] === '=') return 2
+  return b64[len - 1] === '=' ? 1 : 0
 }
 
 export function byteLength(b64) {
@@ -63,7 +64,10 @@ export function toByteArray(b64) {
 }
 
 function tripletToBase64(num) {
-  return lookup[(num >> 18) & 0x3F] + lookup[(num >> 12) & 0x3F] + lookup[(num >> 6) & 0x3F] + lookup[num & 0x3F]
+  return lookup[(num >> 18) & 0x3F] +
+    lookup[(num >> 12) & 0x3F] +
+    lookup[(num >> 6) & 0x3F] +
+    lookup[num & 0x3F]
 }
 
 function encodeChunk(uint8, start, end) {

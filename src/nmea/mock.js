@@ -1,10 +1,42 @@
 export const ais1base64 = 'B5NRnlP00NWr4@Sjm6qHgwiUoP06'
 export const ais1 = `!AIVDO,1,1,,,${ais1base64},0*0D`
 
+export const ais1gpsd = {
+  scaled: true,
+}
 export const ais1decoded = {
   sentence: ais1,
   checksum: '0D',
   fields: ['1', '1', '', '', 'B5NRnlP00NWr4@Sjm6qHgwiUoP06', '0'],
+  data: {
+    fillBits: 0,
+    fragmentCount: 1,
+    fragmentNumber: 1,
+    messageId: '',
+    payload: {
+      accuracy: true,
+      assigned: false,
+      band: true,
+      course: 141.9,
+      cs: true,
+      display: false,
+      dsc: true,
+      heading: 511,
+      lat: 26.5235,
+      lon: -76.9766,
+      mmsi: 367572690,
+      msg22: true,
+      radio: 917510,
+      raim: true,
+      regional: 0,
+      repeat: 0,
+      reserved: 0,
+      second: 35,
+      speed: 0.1,
+      type: 18,
+    },
+    radioChannel: '',
+  },
   isConventional: false,
   isEncapsulated: true,
   isValid: true,
@@ -41,32 +73,7 @@ export const gll = '$GPGLL,2631.40923,N,07658.59501,W,035239.00,A,D*7E'
 export const gpgga = '$GPGGA,035237.00,2631.40930,N,07658.59503,W,2,10,1.00,-3.3,M,-34.4,M,,0000*40'
 export const psrt = '$PSRT,TXS,0000,1*47'
 
-
-export const ais1gpsd = {
-  class: 'AIS',
-  device: 'stdin',
-  type: 18,
-  repeat: 0,
-  mmsi: 367572690,
-  scaled: true,
-  reserved: 0,
-  speed: 0.1,
-  accuracy: true,
-  lon: -76.9766,
-  lat: 26.5235,
-  course: 141.9,
-  heading: 511,
-  second: 35,
-  regional: 0,
-  cs: true,
-  display: false,
-  dsc: true,
-  band: true,
-  msg22: true,
-  raim: true,
-  radio: 917510,
-}
-export const aisgpsd = {
+export const ais2gpsd = {
   type: 18,
   repeat: 0,
   mmsi: 367734850,
@@ -91,6 +98,35 @@ export const aisgpsd = {
 export const ais2decoded = {
   checksum: '15',
   fields: ['1', '1', '', '', 'B5Ndh@P00fmDnsRWn;73;wsUoP06', '0'],
+  data: {
+    fillBits: 0,
+    fragmentCount: 1,
+    fragmentNumber: 1,
+    messageId: '',
+    payload: {
+      accuracy: true,
+      assigned: false,
+      band: true,
+      course: 312.2,
+      cs: true,
+      display: false,
+      dsc: true,
+      heading: 511,
+      lat: 18.3333,
+      lon: -65.2512,
+      mmsi: 367734850,
+      msg22: true,
+      radio: 917510,
+      raim: true,
+      regional: 0,
+      repeat: 0,
+      reserved: 0,
+      second: 55,
+      speed: 0.2,
+      type: 18,
+    },
+    radioChannel: '',
+  },
   isConventional: false,
   isEncapsulated: true,
   isValid: true,

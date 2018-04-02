@@ -1,42 +1,26 @@
+import { identity, isFunction, round } from 'lodash/fp'
 // http://catb.org/gpsd/AIVDM.html
-
 // nmea sentence fields.
-export const fields = ['fragmentCount', 'fragmentNumber', 'messageId', 'radioChannel', 'payload', 'fillBits']
+const roundTo = round.convert({ fixed: false })
 
-export const MSG_TYPE = {
-  1: 'Position Report Class A',
-  2: 'Position Report Class A (Assigned schedule)',
-  3: 'Position Report Class A (Response to interrogation)',
-  4: 'Base Station Report',
-  5: 'Static and Voyage Related Data',
-  6: 'Binary Addressed Message',
-  7: 'Binary Acknowledge',
-  8: 'Binary Broadcast Message',
-  9: 'Standard SAR Aircraft Position Report',
-  10: 'UTC and Date Inquiry',
-  11: 'UTC and Date Response',
-  12: 'Addressed Safety Related Message',
-  13: 'Safety Related Acknowledgement',
-  14: 'Safety Related Broadcast Message',
-  15: 'Interrogation',
-  16: 'Assignment Mode Command',
-  17: 'DGNSS Binary Broadcast Message',
-  19: 'Extended Class B Equipment Position Report',
-  20: 'Data Link Management',
-  21: 'Aid-to-Navigation Report',
-  22: 'Channel Management',
-  23: 'Group Assignment Command',
-  24: 'Static Data Report',
-  25: 'Single Slot Binary Message,',
-  26: 'Multiple Slot Binary Message With Communications State',
-  27: 'Position Report For Long-Range Applications',
-}
+/* eslint-disable no-bitwise */
+export const getLon = lon =>
+  roundTo(parseFloat(((lon & 0x08000000) ? (lon | 0xf0000000) : lon) / 600000), 4)
+
+export const getLat = lat =>
+  roundTo(parseFloat((lat & 0x04000000) ? (lat | 0xf8000000) : lat / 600000), 4)
+/* eslint-enable no-bitwise */
+export const tenth = num => num / 10
+
 export const valueTypes = {
+  lat: getLat,
+  lon: getLon,
+  tenth,
   u: 'Unsigned integer',
   U: 'Unsigned integer with scale - renders as float, suffix is decimal places',
   i: 'Signed integer',
   I: 'Signed integer with scale - renders as float, suffix is decimal places',
-  b: 'Boolean',
+  b: Boolean,
   e: 'Enumerated type (controlled vocabulary)',
   x: 'Spare or reserved bit',
   t: 'String (packed six-bit ASCII)',
@@ -51,85 +35,177 @@ const type = {
   type: 'u',
 }
 const repeat = {
+  id: 'repeat',
   len: 2,
   description: 'Repeat Indicator',
-  id: 'type',
   type: 'u',
 }
 const mmsi = {
+  id: 'mmsi',
   len: 30,
   description: 'MMSI',
   name: 'userId',
-  id: 'type',
   type: 'u',
 }
 const reserved = {
+  id: 'reserved',
   len: 8,
   description: 'Regional Reserved',
-  id: 'type',
   type: 'x',
 }
 const speed = {
+  id: 'speed',
   len: 10,
   description: 'Speed Over Ground',
-  id: 'spped',
-  type: 'U1',
+  type: 'tenth',
   signalK: 'speedOverGround',
 }
 const accuracy = {
+  id: 'accuracy',
   len: 1,
   description: 'Position Accuracy',
   name: 'posAccuracy',
-  id: 'accuracy',
   type: 'b',
+}
+const aisVersion = {
+  id: 'aisVersion',
+  len: 2,
+  description: 'AIS Version',
 }
 const lon = {
   len: 28,
   description: 'Longitude',
   id: 'lon',
-  type: 'u',
+  type: 'lon',
   signalK: 'longitude',
 }
 const lat = {
   len: 27,
   description: 'Latitude',
   id: 'lat',
-  type: 'u',
+  type: 'lat',
   signalK: 'latitude',
 }
 const course = {
   len: 12,
   description: 'Course Over Ground (COG)',
   id: 'course',
-  type: 'u',
+  type: 'tenth',
   signalK: 'courseOverGroundTrue',
 }
+const destination = {
+  id: 'destination',
+  len: 120,
+  description: 'Destination',
+}
+const draught = {
+  id: 'draught',
+  len: 8,
+  description: 'Draught',
+}
+const dte = {
+  id: 'dte',
+  len: 1,
+  description: 'Data Terminal Environment - Is Ready',
+  type: 'b',
+}
 const heading = {
+  id: 'heading',
   len: 9,
   description: 'True Heading (HDG)',
-  id: 'heading',
   type: 'u',
   signalK: 'headingTrue',
 }
-const second = {
-  len: 6,
-  description: 'UTC Seconds Time Stamp',
-  id: 'second',
+const imo = {
+  id: 'imo',
+  len: 30,
+  description: 'IMO Number',
+}
+const callsign = {
+  id: 'callsign',
+  len: 42,
+  description: 'Call Sign',
+}
+const shipname = {
+  id: 'shipname',
+  len: 120,
+  description: 'Vessel Name',
+}
+const year = {
+  id: 'year',
+  len: 14,
+  description: 'Year (UTC)',
   type: 'u',
 }
-const regional = {
+const month = {
+  id: 'month',
+  len: 4,
+  description: 'Month (UTC)',
+  type: 'u',
+}
+const day = {
+  id: 'day',
+  len: 5,
+  description: 'Day (UTC)',
+  type: 'u',
+}
+const hour = {
+  id: 'hour',
+  len: 5,
+  description: 'Hour (UTC)',
+}
+const minute = {
+  id: 'minute',
+  len: 6,
+  description: 'Minute (UTC)',
+}
+const second = {
+  id: 'second',
+  len: 6,
+  description: 'UTC Seconds Time Stamp',
+  type: 'u',
+}
+const toBow = {
+  id: 'toBow',
+  len: 9,
+}
+const toStern = {
+  id: 'toStern',
+  len: 9,
+}
+const toPort = {
+  id: 'toPort',
+  len: 6,
+}
+const toStarboard = {
+  id: 'toStarboard',
+  len: 6,
+}
+const shiptype = {
+  id: 'shiptype',
+  len: 8,
+  description: 'Ship Type',
+}
+const regional2 = {
   len: 2,
-  description: 'Message Type',
+  description: 'Regional reserved',
   id: 'regional',
-  type: 'u' }
+  type: 'u',
+}
+const regional4 = {
+  len: 4,
+  description: 'Regional reserved',
+  id: 'regional',
+  type: 'u',
+}
 const cs = {
   len: 1,
-  description: 'Message Type',
+  description: 'CS Unit',
   id: 'cs',
   type: 'b' }
 const display = {
   len: 1,
-  description: 'Message Type',
+  description: 'Display flag',
   id: 'display',
   type: 'b' }
 const dsc = {
@@ -151,7 +227,13 @@ const assigned = {
   len: 1,
   description: 'Message Type',
   id: 'assigned',
-  type: 'b' }
+  type: 'b',
+}
+const epfd = {
+  id: 'epfd',
+  len: 4,
+  description: 'Type of EPFD',
+}
 const raim = {
   len: 1,
   description: 'RAIM flag',
@@ -177,37 +259,164 @@ const maneuver = {
   description: 'Maneuver Indicator',
   id: 'maneuver',
 }
-const spare = {
+const spare1 = {
+  len: 1,
+  id: 'spare',
+}
+const spare3 = {
   len: 3,
   id: 'spare',
 }
-
+const spare4 = {
+  len: 4,
+  id: 'spare',
+}
+const spare10 = {
+  len: 10,
+  id: 'spare',
+}
+function addFields(fields) {
+  let start = 0
+  return fields.map((value, index) => {
+    const res = {
+      ...value,
+      start,
+      position: index,
+      processor: isFunction(valueTypes[value.type]) ? valueTypes[value.type] : identity,
+    }
+    start += value.len
+    return res
+  })
+}
+const classA = addFields([
+  type, repeat, mmsi,
+  status, turn,
+  speed, accuracy, lon, lat,
+  course, heading, second,
+  maneuver, spare3,
+  raim, radio,
+])
 export const msgTypes = new Map([
-  [1, {
+  {
     id: 1,
     description: 'Position Report Class A',
-    fields: [
+    fields: classA,
+  },
+  {
+    id: 2,
+    description: 'Position Report Class A (Assigned schedule)',
+    fields: classA,
+  },
+  {
+    id: 3,
+    description: 'Position Report Class A (Response to interrogation)',
+    fields: classA,
+  },
+  {
+    id: 4,
+    description: 'Base Station Report',
+    fields: addFields([
       type, repeat, mmsi,
-      status, turn,
-      speed, accuracy, lon, lat,
-      course, heading, second,
-      maneuver, spare,
+      year, month, day, hour, minute, second,
+      accuracy, lon, lat,
+      epfd, spare10,
       raim, radio,
-    ],
-  }],
-  [18, {
+    ]),
+  },
+  {
+    id: 5,
+    description: 'Static and Voyage Related Data',
+    fields: addFields([
+      type, repeat, mmsi,
+      aisVersion, imo, callsign,
+      shipname, shiptype, toBow, toStern, toPort, toStarboard, epfd,
+      month, day, hour, minute,
+      draught, destination, dte, spare1,
+    ]),
+  },
+  {
+    id: 6,
+    description: 'Binary Addressed Message',
+    fields: [],
+  },
+  {
+    id: 7,
+    description: 'Binary Acknowledge',
+    fields: [],
+  },
+  {
+    id: 8,
+    description: 'Binary Broadcast Message',
+    fields: [],
+  },
+  {
+    id: 9,
+    description: 'Standard SAR Aircraft Position Report',
+    fields: [],
+  },
+  {
+    id: 10,
+    description: 'UTC and Date Inquiry',
+    fields: [],
+  },
+  {
+    id: 11,
+    description: 'UTC and Date Response',
+    fields: [],
+  },
+  { id: 12, description: 'Addressed Safety Related Message' },
+  { id: 13, description: 'Safety Related Acknowledgement' },
+  {
+    id: 14,
+    description: 'Safety Related Broadcast Message',
+  },
+  { id: 15, description: 'Interrogation' },
+  { id: 16, description: 'Assignment Mode Command' },
+  { id: 17, description: 'DGNSS Binary Broadcast Message' },
+  {
     id: 18,
     description: 'Standard Class B CS Position Report',
-    fields: [
+    fields: addFields([
       type, repeat, mmsi,
       reserved,
       speed, accuracy, lon, lat,
       course, heading, second,
-      regional, cs, display, dsc, band, msg22, assigned,
+      regional2, cs, display, dsc, band, msg22, assigned,
       raim, radio,
-    ],
-  }],
-])
+    ]),
+  },
+  {
+    id: 19,
+    description: 'Extended Class B Equipment Position Report',
+    fields: addFields([
+      type, repeat, mmsi,
+      reserved,
+      speed, accuracy, lon, lat,
+      course, heading, second,
+      regional4,
+      shipname, shiptype, toBow, toStern, toPort, toStarboard, epfd,
+      raim, dte, assigned, spare4,
+    ]),
+  },
+  { id: 20, description: 'Data Link Management' },
+  {
+    id: 21,
+    description: 'Aid-to-Navigation Report',
+  },
+  { id: 22, description: 'Channel Management' },
+  { id: 23, description: 'Group Assignment Command' },
+  {
+    id: 24,
+    description: 'Static Data Report',
+    fields: [],
+  },
+  { id: 25, description: 'Single Slot Binary Message,' },
+  { id: 26, description: 'Multiple Slot Binary Message With Communications State' },
+  {
+    id: 27,
+    description: 'Position Report For Long-Range Applications',
+  },
+].map(value => [value.id, value]))
 
 export const NAV_STATUS = {
   0: 'Under way using engine',
@@ -312,6 +521,7 @@ export const VESSEL_TYPE = {
   98: 'Other Type, Reserved for future use',
   99: 'Other Type, no additional information',
 }
+
 export const aisTalkers = {
   AD: 'MMEA 4.0 Dependent AIS Base Station',
   AI: 'Mobile AIS station',
