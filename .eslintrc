@@ -1,17 +1,16 @@
 {
-  "extends": [
-    "airbnb-base"
-  ],
+  "extends": ["airbnb-base", "plugin:lodash-fp/recommended"],
   "env": {
     "browser": false
   },
+  "plugins": ["lodash-fp", "import"],
   "rules": {
     "comma-dangle": [2, "always-multiline"],
     "id-length": [2, {
       "min": 3,
       "max": 30,
       "properties": "never",
-      "exceptions": ["t", "id", "db", "Me", "me"]
+      "exceptions": ["t", "id", "db", "cs"]
     }],
     "import/no-named-as-default": 0,
     "no-console": 1,

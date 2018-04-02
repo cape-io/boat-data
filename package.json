@@ -16,11 +16,14 @@
   "dependencies": {
     "address": "^1.0.3",
     "axios": "^0.17.1",
+    "bit-buffer": "^0.2.3",
+    "bitset": "^5.0.2",
     "cape-lodash": "^1.13.1",
     "cape-redux": "^3.2.0",
     "cape-select": "^2.4.0",
     "firebase-server": "^0.11.0",
     "geolib": "^2.0.23",
+    "ggencoder": "^0.1.20",
     "graphql": "^0.13.1",
     "graphql-date": "^1.0.3",
     "graphql-url": "^2.0.4",
@@ -34,7 +37,7 @@
     "redux-persist": "^5.x",
     "reselect": "^3.0.1",
     "serialport": "^6.0.5",
-    "units-js": "^0.3.0",
+    "text-encoding": "^0.6.4",
     "xml2js": "^0.4.19",
     "yarn": "^1.1.0"
   },
@@ -49,6 +52,7 @@
     "eslint-loader": "^1.6.1",
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-lodash-fp": "^2.1.3",
     "jest": "^21.1.0"
   }
 }

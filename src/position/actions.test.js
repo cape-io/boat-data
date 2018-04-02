@@ -1,6 +1,19 @@
-import { map, now } from 'lodash'
-import { positionUpdate, POSITION_UPDATE } from './actions'
+import { flow, map, now } from 'lodash/fp'
+import { posPayload, positionUpdate, POSITION_UPDATE } from './actions'
 /* globals describe test expect */
+
+describe('posPayload', () => {
+  test('leave alone if obj has time', () => {
+    const args1 = { time: now() }
+    expect(posPayload(args1)).toBe(args1)
+  })
+  test('create obj and add time', () => {
+    const res = posPayload()
+    expect(res).toMatchObject({
+      time: expect.any(Number),
+    })
+  })
+})
 
 export const positions = [
   [38.963580, -76.481030, 1505855411114],
@@ -12,23 +25,23 @@ export const positions = [
   [38.963388, -76.480888, 1505855872137],
   [38.963600, -76.480700, 1505855884141],
 ]
-export const actions = map(positions, ([latitude, longitude, time]) => positionUpdate({
+export const arrArgs = ([latitude, longitude, time]) => ({
   latitude,
   longitude,
   src: 'test',
   time,
-}))
-
+})
+export const actions = map(flow(arrArgs, positionUpdate), positions)
 describe('positionUpdate', () => {
   test('should add time if it is missing', () => {
     const time = now()
     const pos1 = positionUpdate({ latitude: 38, longitude: -76, src: 'test1' })
-    expect(pos1)
-    .toMatchObject({
+    expect(pos1).toEqual({
       type: POSITION_UPDATE,
       payload: {
         latitude: 38,
         longitude: -76,
+        time: expect.any(Number),
         src: 'test1',
       },
     })
@@ -38,6 +51,6 @@ describe('positionUpdate', () => {
   })
   test('Should handle no coords', () => {
     const pos2 = positionUpdate(null)
-    console.log(pos2)
+    // console.log(pos2)
   })
 })

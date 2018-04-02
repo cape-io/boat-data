@@ -1,4 +1,4 @@
-import { curry } from 'lodash'
+import { curry } from 'lodash/fp'
 import { metersToFeet, metersToFathoms } from '../utils'
 import { toSentence } from './utils'
 

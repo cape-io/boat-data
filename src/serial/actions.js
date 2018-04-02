@@ -1,15 +1,7 @@
 import { overEvery, toString } from 'lodash/fp'
 import { createSimpleAction, noopAction } from 'cape-redux'
-import { getName, isAis, isData } from '../nmea/decode'
+import { decode } from '../nmea/decode'
 
-export function createDataPayload(payload) {
-  return {
-    isAis: isAis(payload),
-    isData: isData(payload),
-    name: getName(payload),
-    sentence: payload,
-  }
-}
 // export const NMEA_AIS = 'boatData/NmeaAIS'
 // export const nmeaAis = createSimpleAction(NMEA_AIS, createDataPayload)
 // export const nmeaData = createSimpleAction(NMEA_DATA, createDataPayload)
@@ -19,7 +11,7 @@ export function createDataPayload(payload) {
 // ])
 
 export const SERIAL_DATA = 'serial/SerialData'
-export const serialData = createSimpleAction(SERIAL_DATA, createDataPayload)
+export const serialData = createSimpleAction(SERIAL_DATA, decode)
 
 export const SERIAL_CLOSE = 'serial/SerialClose'
 export function serialClose(payload) {

@@ -1,4 +1,4 @@
-import { flow, identity, method } from 'lodash'
+import { flow, identity, method } from 'lodash/fp'
 import { fpBranch } from 'cape-lodash'
 import { addListener } from 'cape-redux'
 import { getAlarm, getWaypointDistance } from './select'
@@ -9,7 +9,7 @@ export const getMsg = fpBranch(messageTrue, messageFalse)
 export const destinationNumbers = '16128459876<16128604060<16179596539'
 // export const destinationNumbers = '16179596539'
 export function toAlarm(state) {
-  console.log('Alarm!', state)
+  // console.log('Alarm!', state)
   return {
     text: `${getMsg(getAlarm(state))} Distance of ${getWaypointDistance(state)} meters.`,
     dst: destinationNumbers,

@@ -7,7 +7,7 @@ import {
 } from './select'
 import { alarmDistance, limitSrc, waypointUpdate } from './actions'
 import { actions } from './actions.test'
-import createAlarm from './alarm'
+import createAlarm, { destinationNumbers } from './alarm'
 
 const store = createStore(reducer)
 const alarmFunc = jest.fn()
@@ -110,7 +110,7 @@ describe('POSITION_UPDATE', () => {
     expect(getWaypointDistance(state)).toBe(27.8)
     expect(alarmFunc).toHaveBeenCalledTimes(1)
     expect(alarmFunc).toHaveBeenLastCalledWith({
-      dst: '16179596539',
+      dst: destinationNumbers,
       text: 'DRAG ALARM! FREE SPIRIT is outside the alarm radius. Distance of 27.8 meters.',
     })
     // Alarm off.
@@ -120,7 +120,7 @@ describe('POSITION_UPDATE', () => {
     expect(getWaypointDistance(state)).toBe(11.2)
     expect(state.alarm.time).toBe(actions[6].payload.time)
     expect(alarmFunc).toHaveBeenLastCalledWith({
-      dst: '16179596539',
+      dst: destinationNumbers,
       text: 'FREE SPIRIT is back inside the radius. Distance of 11.2 meters.',
     })
     store.dispatch(actions[5])
