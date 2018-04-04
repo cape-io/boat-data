@@ -12,7 +12,7 @@ export const ais1decoded = {
     fillBits: 0,
     fragmentCount: 1,
     fragmentNumber: 1,
-    messageId: '',
+    messageId: null,
     payload: {
       accuracy: true,
       assigned: false,
@@ -62,11 +62,9 @@ export const ais1payload = {
 }
 export const ais1six = [
   18, 5, 30, 34, 54, 52, 32, 0, 0, 30, 39, 58, 4, 16,
-  35, 50, 53, 6, 57, 24, 47, 63, 49, 37, 55, 32, 0, 6,
-]
+  35, 50, 53, 6, 57, 24, 47, 63, 49, 37, 55, 32, 0, 6]
 export const ais1byteArray = new Uint8Array([
-  72, 87, 162, 219, 72, 0, 1, 233, 250, 17, 8, 242, 212, 110, 88, 191, 252, 101, 222, 0, 6,
-])
+  72, 87, 162, 219, 72, 0, 1, 233, 250, 17, 8, 242, 212, 110, 88, 191, 252, 101, 222, 0, 6])
 export const ais2 = '!AIVDO,1,1,,,B5Ndh@P00fmDnsRWn;73;wsUoP06,0*15'
 export const ais3 = '!AIVDO,1,1,,A,B5Ndh@P00NmDnqRWn;33;wb5oP06,0*0B'
 export const gll = '$GPGLL,2631.40923,N,07658.59501,W,035239.00,A,D*7E'
@@ -102,7 +100,7 @@ export const ais2decoded = {
     fillBits: 0,
     fragmentCount: 1,
     fragmentNumber: 1,
-    messageId: '',
+    messageId: null,
     payload: {
       accuracy: true,
       assigned: false,
@@ -161,3 +159,19 @@ export const gllDecoded = {
   talker: 'GP',
   type: 'GLL',
 }
+
+export const msg5base64 = '55`V:jT2EhBU``kWOK48h4<f0LthB2222222220U2HC44vg>N50@P@kp888888888888880'
+export const msg5byteArray = new Uint8Array([
+  20, 90, 38, 43, 41, 2, 87, 4, 165, 162, 140, 231, 125, 177, 8, 192, 67, 46, 1, 207,
+  48, 72, 32, 130, 8, 32, 130, 8, 32, 37, 9, 132, 196, 19, 235, 206, 120, 80, 16, 129,
+  12, 248, 32, 130, 8, 32, 130, 8, 32, 130, 8, 32, 128])
+// !AIVDM,2,1,9,B,55`V:jT2EhBU``kWOK48h4<f0LthB2222222220U2HC44vg>N50@P@kp8888,0*74
+// !AIVDM,2,2,9,B,88888888880,2*2E
+// !AIVDM,2,1,0,B,55NWjhP00001L@SOWSPhtpN05LDTLQ@DB222220U2P=336eA0540C3H0Q@@j,0*20
+// !AIVDM,2,2,0,B,88888888880,2*27
+// !AIVDM,2,1,1,B,55NCAc000001L@CWSKT4pD`v222222222222220U0h=335I?N4S@DTj820DP,0*05
+// !AIVDM,2,2,1,B,SmD`8888880,2*3C
+// !AIVDM,2,1,2,B,5819?@@2ASSmKMTs801HUH60l5<000000000000U30?445>DA5S@DTj20DPS,0*60
+// !AIVDM,2,2,2,B,lP000000000,2*19
+// !AIVDM,2,1,3,A,54al?N82>DSiK<p;B205@h4q@T>1=Dr22222221@;0;78uJ?N90@P@kp8888,0*65
+// !AIVDM,2,2,3,A,88888888880,2*27

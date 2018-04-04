@@ -1,13 +1,14 @@
-import { identity } from 'lodash/fp'
+import { defaultTo, identity } from 'lodash/fp'
 import { decodePayload } from './ais'
 
-export const getInt = num => parseInt(num, 10)
+export const getInt = num => defaultTo(null, parseInt(num, 10))
 export const processType = {
   ais: decodePayload,
   bool: Boolean,
   const: identity,
   float: parseFloat,
   int: getInt,
+  string: identity,
   undefined: identity,
 }
 const VDM = {
@@ -16,8 +17,8 @@ const VDM = {
   fields: [
     { id: 'fragmentCount', type: 'int' },
     { id: 'fragmentNumber', type: 'int' },
-    { id: 'messageId' },
-    { id: 'radioChannel' },
+    { id: 'messageId', type: 'int' },
+    { id: 'radioChannel', type: 'string' },
     { id: 'payload', type: 'ais' },
     { id: 'fillBits', type: 'int' },
   ],

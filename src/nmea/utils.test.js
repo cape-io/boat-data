@@ -1,5 +1,5 @@
 /* globals describe test expect */
-import { getChecksum, stripDollar } from './utils'
+import { getChecksum, rmFirstChar } from './utils'
 
 const dbt = [
   '--DBT,17.6,f,5.37,M,2.9,F',
@@ -21,9 +21,9 @@ describe('getChecksum', () => {
     expect(getChecksum(dbt[5])).toBe('27')
   })
 })
-describe('stripDollar', () => {
+describe('rmFirstChar', () => {
   test('Remove first dollar sign.', () => {
-    expect(stripDollar('$1$2')).toBe('1$2')
-    expect(stripDollar('1$$2')).toBe('1$$2')
+    expect(rmFirstChar('$1$2')).toBe('1$2')
+    expect(rmFirstChar('!1$$2')).toBe('1$$2')
   })
 })

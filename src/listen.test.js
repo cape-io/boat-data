@@ -1,9 +1,8 @@
 /* globals describe test expect */
-import { set } from 'lodash'
+import { set } from 'lodash/fp'
 import { getDepth } from './listen'
 
-const state = {}
-set(state, 'data.115.128267.fields.Depth', 10)
+const state = set('data.115.128267.fields.Depth', 10, {})
 
 describe('getDepth', () => {
   test('Get deeply nested value.', () => {

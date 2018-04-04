@@ -19,7 +19,11 @@ export default {
         name: 'AIS Hub',
         status: 'http://www.aishub.net/live-map.php?rrdname=2092&sname=Bayfield',
       },
-      { ip: '109.200.19.151', port: 4001, name: 'Ship Finder' },
+      {
+        ip: '109.200.19.151',
+        port: 4001,
+        name: 'Ship Finder',
+      },
     ],
     udpListen: 10110,
   },

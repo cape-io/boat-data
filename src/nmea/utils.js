@@ -1,12 +1,11 @@
-import { curry, flow, padCharsStart, reduce, replace, toUpper } from 'lodash/fp'
+import { curry, flow, padCharsStart, reduce, toUpper } from 'lodash/fp'
 import { transformProp } from 'cape-lodash'
 
 export const methodWith = (methodId, args) => item => item[methodId](...args)
 
-export const rmDollar = replace(/^\$/, '')
-export function stripDollar(baseString) {
-  return baseString[0] === '$' ? baseString.slice(1) : baseString
-}
+export const rmFirstChar = methodWith('slice', [1])
+export const addBang = str => '!'.concat(str)
+export const addDollar = str => '$'.concat(str)
 
 export const checkSumReducer = (result = 0, value) =>
   result ^ value.charCodeAt() // eslint-disable-line no-bitwise

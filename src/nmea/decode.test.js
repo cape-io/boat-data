@@ -60,12 +60,8 @@ describe('getInfo', () => {
   test('gets checksum and info', () => {
     expect(getInfo(ais1)).toEqual({
       checksum: '0D',
-      fields: ['1', '1', '', '', 'B5NRnlP00NWr4@Sjm6qHgwiUoP06', '0'],
-      isConventional: false,
-      isEncapsulated: true,
+      fields: '!AIVDO,1,1,,,B5NRnlP00NWr4@Sjm6qHgwiUoP06,0',
       isValid: true,
-      talker: 'AI',
-      type: 'VDO',
     })
   })
 })
